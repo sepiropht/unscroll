@@ -5,6 +5,7 @@ import { clear, download, el } from '../shared/dom.ts';
 import { formatHM, localeTag } from '../shared/format.ts';
 import { t, type MessageKey } from '../shared/i18n.ts';
 import type { ClientResponse } from '../shared/messages.ts';
+import type { BillingPlan } from './billing.ts';
 import { logicalDateKey, shiftDateKey } from '../shared/time.ts';
 import { toCanvas } from 'qrcode';
 import { encodePairingLink } from './pairing.ts';
@@ -38,6 +39,7 @@ const errors: Record<string, MessageKey> = {
   'sync-conflict': 'proErrConflict',
   'sync-network': 'proErrNetwork',
   'sync-http': 'proErrHttp',
+  'sync-payment': 'billEnded',
   'bad-passphrase': 'proErrPass',
   'pair-invalid': 'proPairInvalid',
   'invalid-domain': 'proErrDomain',
@@ -91,6 +93,53 @@ const pairPanel = el(
   copyButton,
 );
 let pairingLink: string | null = null;
+const billState = el('strong', { id: 'bill-state', role: 'status' });
+const billHelp = el('p', { class: 'help', id: 'bill-help', 'data-pro-i18n': 'billKept' });
+const billMonthly = el('button', { type: 'button', id: 'bill-monthly', 'data-pro-i18n': 'billMonthly' }) as HTMLButtonElement;
+const billYearly = el('button', { type: 'button', id: 'bill-yearly', class: 'secondary', 'data-pro-i18n': 'billYearly' }) as HTMLButtonElement;
+const billManage = el('button', { type: 'button', id: 'bill-manage', class: 'secondary', 'data-pro-i18n': 'billManage' }) as HTMLButtonElement;
+const billPanel = el(
+  'div',
+  { class: 'panel bill-panel', id: 'bill-panel' },
+  el('p', {}, el('span', { 'data-pro-i18n': 'billTitle' }), ' · ', billState),
+  billHelp,
+  el('div', { class: 'inline' }, billMonthly, billYearly, billManage),
+);
+billPanel.hidden = true;
+let billPlan: BillingPlan = { enabled: false };
+
+function billStateText(plan: BillingPlan): string {
+  switch (plan.state) {
+    case 'trial':
+      return text('billTrial', { days: plan.daysLeft ?? 0 });
+    case 'active':
+      return plan.cancelAtPeriodEnd ? text('billCanceling') : text('billActive');
+    case 'past_due':
+      return text('billPastDue');
+    case 'ended':
+      return text('billEnded');
+    default:
+      return text('billFree');
+  }
+}
+
+/** Shown only when the server reports billing (the hosted instance). */
+function renderBilling(plan: BillingPlan): void {
+  billPlan = plan;
+  billPanel.hidden = !plan.enabled;
+  if (!plan.enabled) return;
+  billState.textContent = billStateText(plan);
+  const canSubscribe = plan.state === 'trial' || plan.state === 'ended';
+  billMonthly.hidden = !canSubscribe;
+  billYearly.hidden = !canSubscribe;
+  billManage.hidden = !plan.canManage;
+  billHelp.hidden = plan.state !== 'ended';
+}
+
+async function refreshBilling(): Promise<void> {
+  const response = await call({ type: 'pro-sync', action: 'billing' });
+  renderBilling(response.ok && response.billing ? response.billing : { enabled: false });
+}
 const domainInput = el('input', { id: 'pro-category-domain' }) as HTMLInputElement;
 const categorySelect = el('select', { id: 'pro-category' }) as HTMLSelectElement;
 
@@ -104,6 +153,7 @@ function applyLabels(): void {
     if (key) node.textContent = text(key);
   });
   pairButton.textContent = pairingLink ? text('proHideQr') : text('proPair');
+  if (billPlan.enabled) billState.textContent = billStateText(billPlan);
   qrCanvas.setAttribute('aria-label', text('proQrAlt'));
 }
 
@@ -359,6 +409,8 @@ export async function refreshProOptions(): Promise<ProData | null> {
     renderReport(data);
     renderCategories(data);
     applyLabels();
+    if (data.sync.enabled) void refreshBilling();
+    else renderBilling({ enabled: false });
     return data;
   } catch {
     if (!proStorageTold && mounted) {
@@ -477,6 +529,7 @@ export function mountProOptions(host: OptionsMount): void {
       { class: 'stack' },
       el('h1', { id: 'sync-title', 'data-pro-i18n': 'proSync' }, text('proSync')),
       syncForm,
+      billPanel,
       pairBlock,
     ),
   );
@@ -541,6 +594,16 @@ export function mountProOptions(host: OptionsMount): void {
   syncForm.querySelector('#pro-sync-now')?.addEventListener('click', () => {
     void after({ type: 'pro-sync', action: 'now' }, text('proSynced'));
   });
+  const openBilling = (action: 'checkout' | 'portal', plan?: 'monthly' | 'yearly') => {
+    void (async () => {
+      const response = await call({ type: 'pro-sync', action, plan });
+      if (!mounted) return;
+      mounted.toast(response.ok ? text('billOpened') : errorText(response.error), response.ok ? 'ok' : 'err');
+    })();
+  };
+  billMonthly.addEventListener('click', () => openBilling('checkout', 'monthly'));
+  billYearly.addEventListener('click', () => openBilling('checkout', 'yearly'));
+  billManage.addEventListener('click', () => openBilling('portal'));
   pairButton.addEventListener('click', () => {
     if (pairingLink) {
       hidePairing();

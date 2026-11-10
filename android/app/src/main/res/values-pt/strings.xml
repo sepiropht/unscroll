@@ -639,4 +639,15 @@
         <item>O período que protege continua inteiro.</item>
         <item>Nada de urgente exige este ecrã agora mesmo.</item>
     </string-array>
+    <string name="sync_bill_title">Plano hospedado</string>
+    <string name="sync_bill_trial">Teste: faltam %1$d dias</string>
+    <string name="sync_bill_active">Ativo</string>
+    <string name="sync_bill_canceling">Ativo até o fim do período</string>
+    <string name="sync_bill_past_due">Pagamento falhou - atualize o cartão</string>
+    <string name="sync_bill_ended">Teste encerrado - assine ou hospede você mesmo</string>
+    <string name="sync_bill_free">Grátis</string>
+    <string name="sync_bill_kept">Seus dados ficam neste telefone e podem ser exportados. A cópia do servidor fica 30 dias.</string>
+    <string name="sync_bill_monthly">Assinar - 2,99 €/mês</string>
+    <string name="sync_bill_yearly">24 €/ano</string>
+    <string name="sync_bill_manage">Gerenciar assinatura</string>
 </resources>

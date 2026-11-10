@@ -70,6 +70,10 @@ func Open(path, legacyTokenHash string) (*Store, error) {
 		db.Close()
 		return nil, err
 	}
+	if err := s.migrateBilling(); err != nil {
+		db.Close()
+		return nil, err
+	}
 	return s, nil
 }
 
@@ -269,6 +273,9 @@ func (s *Store) CreateAccount(now time.Time) (id, token string, err error) {
 func (s *Store) DeleteAccount(id string) error {
 	return s.withTx(func(tx *sql.Tx) error {
 		if _, err := tx.Exec(`DELETE FROM blobs WHERE account_id = ?`, id); err != nil {
+			return err
+		}
+		if _, err := tx.Exec(`DELETE FROM billing WHERE account_id = ?`, id); err != nil {
 			return err
 		}
 		res, err := tx.Exec(`DELETE FROM accounts WHERE id = ?`, id)

@@ -118,6 +118,17 @@ export type SyncPublicState = {
   lastError: string | null
 }
 
+/** Hosted sync plan. `enabled: false` on self-hosted servers. */
+export type BillingPlan = {
+  enabled: boolean
+  state?: 'trial' | 'active' | 'past_due' | 'ended' | 'free'
+  daysLeft?: number
+  canManage?: boolean
+  cancelAtPeriodEnd?: boolean
+}
+
+export type BillingOpenResult = { ok: true } | { ok: false; reason: string }
+
 export type SyncConfigInput = {
   enabled: boolean
   baseUrl: string
@@ -169,6 +180,8 @@ export type UnscrollApi = {
   pullSync: () => Promise<SyncOutcome>
   getPairingLink: () => Promise<PairingLinkResult>
   applyPairingLink: (link: string) => Promise<PairingApplyResult>
+  getBilling: () => Promise<BillingPlan>
+  openBilling: (kind: 'checkout' | 'portal', plan?: 'monthly' | 'yearly') => Promise<BillingOpenResult>
   getReport: () => Promise<AdvancedReport | null>
   onTick: (cb: (snapshot: Snapshot) => void) => () => void
   onOverlay: (cb: (payload: OverlayPayload | null) => void) => () => void

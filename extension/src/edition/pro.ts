@@ -8,6 +8,7 @@ import {
   sanitizeStats,
 } from '../shared/state.ts';
 import { createSyncAccount, shouldProvisionAccount } from './account.ts';
+import { billingLink, fetchPlan } from './billing.ts';
 import { HttpSyncProvider } from './http-sync.ts';
 import { decodePairingLink, PAIRING_LINK_MAX } from './pairing.ts';
 import {
@@ -150,7 +151,8 @@ function mapError(error: unknown): string {
       error.message === 'bad-passphrase' ||
       error.message === 'sync-auth' ||
       error.message === 'sync-http' ||
-      error.message === 'sync-conflict'
+      error.message === 'sync-conflict' ||
+      error.message === 'sync-payment'
     ) {
       return error.message;
     }
@@ -462,8 +464,26 @@ export async function onMessage(message: unknown): Promise<ClientResponse | null
     }
   }
   if (action === 'pair') return applyPair(message);
+  if (action === 'billing' || action === 'checkout' || action === 'portal') return billingAction(action, message);
   if (action !== 'save') return { ok: false, error: 'unknown' };
   return saveSync(message);
+}
+
+/** Hosted plan: status, or open Stripe Checkout / Customer Portal in a tab. */
+async function billingAction(action: 'billing' | 'checkout' | 'portal', message: Record<string, unknown>): Promise<ClientResponse> {
+  const data = await loadPro();
+  if (!data) return { ok: false, error: 'storage' };
+  const { url, token, enabled } = data.sync;
+  if (action === 'billing') {
+    if (!enabled || !token) return { ok: true, billing: { enabled: false } };
+    return { ok: true, billing: await fetchPlan(url || DEFAULT_SYNC_URL, token) };
+  }
+  if (!token) return { ok: false, error: 'sync-config' };
+  const plan = message.plan === 'yearly' ? 'yearly' : 'monthly';
+  const link = await billingLink(url || DEFAULT_SYNC_URL, token, action, plan);
+  if (!link.ok) return link;
+  await new Promise<void>((resolve) => chrome.tabs.create({ url: link.url }, () => resolve()));
+  return { ok: true };
 }
 
 async function saveSync(message: Record<string, unknown>): Promise<ClientResponse> {

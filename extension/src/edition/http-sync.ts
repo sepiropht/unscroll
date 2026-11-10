@@ -26,6 +26,7 @@ export class HttpSyncProvider implements SyncProvider {
     const response = await this.request(id, 'PUT', body, extra);
     if (response.status === 412) throw new Error('sync-conflict');
     if (response.status === 401 || response.status === 403) throw new Error('sync-auth');
+    if (response.status === 402) throw new Error('sync-payment');
     if (!response.ok) throw new Error('sync-http');
     if (parseEtag(response.headers.get('etag')) !== expected) throw new Error('sync-http');
   }
@@ -34,6 +35,7 @@ export class HttpSyncProvider implements SyncProvider {
     const response = await this.request(id, 'GET');
     if (response.status === 404) return null;
     if (response.status === 401 || response.status === 403) throw new Error('sync-auth');
+    if (response.status === 402) throw new Error('sync-payment');
     if (!response.ok) throw new Error('sync-http');
     const type = (response.headers.get('content-type') ?? '').toLowerCase();
     if (!type.startsWith('application/json')) throw new Error('sync-http');

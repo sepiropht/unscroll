@@ -3,6 +3,7 @@ import type { BlockReason } from './rules.ts';
 import type { ImportPatch } from './exchange.ts';
 import type { SiteRow } from './stats.ts';
 import type { Lang, Theme } from './state.ts';
+import type { BillingPlan } from '../edition/billing.ts';
 
 export interface Snapshot {
   language: Lang;
@@ -62,7 +63,7 @@ export type ClientMessage =
   | { type: 'recheck' };
 
 export type ClientResponse =
-  | { ok: true; snapshot?: Snapshot; status?: SiteStatus; provisioned?: boolean }
+  | { ok: true; snapshot?: Snapshot; status?: SiteStatus; provisioned?: boolean; billing?: BillingPlan }
   | { ok: false; error: string };
 
 const MESSAGE_TYPES = new Set([

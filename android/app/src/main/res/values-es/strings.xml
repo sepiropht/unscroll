@@ -639,4 +639,15 @@
         <item>El tramo que proteges sigue entero.</item>
         <item>Nada urgente exige esta pantalla ahora mismo.</item>
     </string-array>
+    <string name="sync_bill_title">Plan alojado</string>
+    <string name="sync_bill_trial">Prueba: quedan %1$d días</string>
+    <string name="sync_bill_active">Activo</string>
+    <string name="sync_bill_canceling">Activo hasta el final del periodo</string>
+    <string name="sync_bill_past_due">Pago fallido - actualiza tu tarjeta</string>
+    <string name="sync_bill_ended">Prueba terminada - suscríbete o alójalo tú</string>
+    <string name="sync_bill_free">Gratis</string>
+    <string name="sync_bill_kept">Tus datos siguen en este teléfono y se pueden exportar. La copia del servidor se guarda 30 días.</string>
+    <string name="sync_bill_monthly">Suscribirse - 2,99 €/mes</string>
+    <string name="sync_bill_yearly">24 €/año</string>
+    <string name="sync_bill_manage">Gestionar suscripción</string>
 </resources>

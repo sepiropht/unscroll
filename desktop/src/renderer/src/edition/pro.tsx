@@ -1,6 +1,6 @@
 import { formatDayLabel, formatDuration } from '@shared/format'
 import { DEFAULT_SYNC_URL } from '@shared/sync'
-import type { AdvancedReport, Locale, Snapshot, SyncPublicState } from '@shared/types'
+import type { AdvancedReport, BillingPlan, Locale, Snapshot, SyncPublicState } from '@shared/types'
 import { toDataURL } from 'qrcode'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { EmptyState } from '../empty'
@@ -55,6 +55,18 @@ type ProCopy = {
   apps: string
   empty: string
   loading: string
+  billTitle: string
+  billTrial: string
+  billActive: string
+  billCanceling: string
+  billPastDue: string
+  billEnded: string
+  billFree: string
+  billKept: string
+  billMonthly: string
+  billYearly: string
+  billManage: string
+  billOpened: string
 }
 
 const copy: Record<Locale, ProCopy> = {
@@ -107,7 +119,19 @@ const copy: Record<Locale, ProCopy> = {
     delta: 'Écart',
     apps: 'Applications',
     empty: 'Pas encore assez de jours pour comparer.',
-    loading: 'Chargement'
+    loading: 'Chargement',
+    billTitle: 'Offre hébergée',
+    billTrial: 'Essai : {days} jours restants',
+    billActive: 'Actif',
+    billCanceling: 'Actif jusqu’à la fin de la période',
+    billPastDue: 'Paiement refusé - mettez à jour votre carte',
+    billEnded: 'Essai terminé - abonnez-vous ou auto-hébergez',
+    billFree: 'Gratuit',
+    billKept: 'Vos données restent sur cet ordinateur et s’exportent. La copie du serveur est gardée 30 jours.',
+    billMonthly: 'S’abonner - 2,99 €/mois',
+    billYearly: '24 €/an',
+    billManage: 'Gérer l’abonnement',
+    billOpened: 'Ouvert dans le navigateur.'
   },
   en: {
     sync: 'Sync',
@@ -158,7 +182,19 @@ const copy: Record<Locale, ProCopy> = {
     delta: 'Change',
     apps: 'Applications',
     empty: 'Not enough days to compare yet.',
-    loading: 'Loading'
+    loading: 'Loading',
+    billTitle: 'Hosted plan',
+    billTrial: 'Trial: {days} days left',
+    billActive: 'Active',
+    billCanceling: 'Active until the end of the period',
+    billPastDue: 'Payment failed - update your card',
+    billEnded: 'Trial ended - subscribe or self-host',
+    billFree: 'Free',
+    billKept: 'Your data stays on this computer and can be exported. The server copy is kept for 30 days.',
+    billMonthly: 'Subscribe - €2.99/month',
+    billYearly: '€24/year',
+    billManage: 'Manage subscription',
+    billOpened: 'Opened in your browser.'
   },
   es: {
     sync: 'Sync',
@@ -209,7 +245,19 @@ const copy: Record<Locale, ProCopy> = {
     delta: 'Diferencia',
     apps: 'Aplicaciones',
     empty: 'Aún no hay días bastantes para comparar.',
-    loading: 'Cargando'
+    loading: 'Cargando',
+    billTitle: 'Plan alojado',
+    billTrial: 'Prueba: quedan {days} días',
+    billActive: 'Activo',
+    billCanceling: 'Activo hasta el final del periodo',
+    billPastDue: 'Pago fallido - actualice su tarjeta',
+    billEnded: 'Prueba terminada - suscríbase o alójelo usted',
+    billFree: 'Gratis',
+    billKept: 'Sus datos siguen en este equipo y se pueden exportar. La copia del servidor se guarda 30 días.',
+    billMonthly: 'Suscribirse - 2,99 €/mes',
+    billYearly: '24 €/año',
+    billManage: 'Gestionar suscripción',
+    billOpened: 'Abierto en el navegador.'
   },
   de: {
     sync: 'Sync',
@@ -260,7 +308,19 @@ const copy: Record<Locale, ProCopy> = {
     delta: 'Abstand',
     apps: 'Anwendungen',
     empty: 'Noch nicht genug Tage für einen Vergleich.',
-    loading: 'Laden'
+    loading: 'Laden',
+    billTitle: 'Gehosteter Tarif',
+    billTrial: 'Testphase: noch {days} Tage',
+    billActive: 'Aktiv',
+    billCanceling: 'Aktiv bis zum Ende des Zeitraums',
+    billPastDue: 'Zahlung fehlgeschlagen - Karte aktualisieren',
+    billEnded: 'Testphase beendet - abonnieren oder selbst hosten',
+    billFree: 'Kostenlos',
+    billKept: 'Ihre Daten bleiben auf diesem Computer und lassen sich exportieren. Die Serverkopie bleibt 30 Tage.',
+    billMonthly: 'Abonnieren - 2,99 €/Monat',
+    billYearly: '24 €/Jahr',
+    billManage: 'Abo verwalten',
+    billOpened: 'Im Browser geöffnet.'
   },
   pt: {
     sync: 'Sync',
@@ -311,7 +371,19 @@ const copy: Record<Locale, ProCopy> = {
     delta: 'Diferença',
     apps: 'Aplicações',
     empty: 'Ainda não há dias que cheguem para comparar.',
-    loading: 'A carregar'
+    loading: 'A carregar',
+    billTitle: 'Plano alojado',
+    billTrial: 'Teste: faltam {days} dias',
+    billActive: 'Ativo',
+    billCanceling: 'Ativo até ao fim do período',
+    billPastDue: 'Pagamento falhou - atualize o cartão',
+    billEnded: 'Teste terminado - subscreva ou aloje você mesmo',
+    billFree: 'Grátis',
+    billKept: 'Os seus dados ficam neste computador e podem ser exportados. A cópia do servidor fica 30 dias.',
+    billMonthly: 'Subscrever - 2,99 €/mês',
+    billYearly: '24 €/ano',
+    billManage: 'Gerir subscrição',
+    billOpened: 'Aberto no navegador.'
   }
 }
 
@@ -392,6 +464,7 @@ const reasonCopy: Record<Locale, Record<KnownReason | 'http' | 'other', string>>
 
 function reasonText(locale: Locale, reason: string): string {
   const pack = reasonCopy[locale]
+  if (reason === 'http-402') return text(locale).billEnded
   if (reason.startsWith('http-')) return pack.http.replaceAll('{code}', reason.slice(5))
   if ((KNOWN_REASONS as readonly string[]).includes(reason)) return pack[reason as KnownReason]
   return pack.other
@@ -446,6 +519,7 @@ function SyncPage({ snap }: { snap: Snapshot }) {
   const [busy, setBusy] = useState(false)
   const [pairing, setPairing] = useState<{ link: string; image: string | null } | null>(null)
   const [paste, setPaste] = useState('')
+  const [billing, setBilling] = useState<BillingPlan>({ enabled: false })
 
   useEffect(() => {
     mounted.current = true
@@ -461,6 +535,61 @@ function SyncPage({ snap }: { snap: Snapshot }) {
       mounted.current = false
     }
   }, [])
+
+  // Plan state only exists on servers with billing on (the hosted one).
+  useEffect(() => {
+    if (!state?.enabled || !state.tokenSet) {
+      setBilling({ enabled: false })
+      return
+    }
+    let alive = true
+    void window.unscroll.getBilling().then(
+      (plan) => {
+        if (alive) setBilling(plan)
+      },
+      () => undefined
+    )
+    return () => {
+      alive = false
+    }
+  }, [state?.enabled, state?.tokenSet, state?.baseUrl, state?.lastPushAt, state?.lastError])
+
+  function billStateText(plan: BillingPlan): string {
+    switch (plan.state) {
+      case 'trial':
+        return labels.billTrial.replaceAll('{days}', String(plan.daysLeft ?? 0))
+      case 'active':
+        return plan.cancelAtPeriodEnd ? labels.billCanceling : labels.billActive
+      case 'past_due':
+        return labels.billPastDue
+      case 'ended':
+        return labels.billEnded
+      default:
+        return labels.billFree
+    }
+  }
+
+  function openBilling(kind: 'checkout' | 'portal', plan?: 'monthly' | 'yearly') {
+    setBusy(true)
+    void window.unscroll.openBilling(kind, plan).then(
+      (result) => {
+        if (!mounted.current) return
+        setBusy(false)
+        if (!result.ok) {
+          setNote('')
+          setError(reasonText(locale, result.reason))
+          return
+        }
+        setError('')
+        setNote(labels.billOpened)
+      },
+      () => {
+        if (!mounted.current) return
+        setBusy(false)
+        setError(reasonText(locale, 'network'))
+      }
+    )
+  }
 
   function onSave(event: FormEvent) {
     event.preventDefault()
@@ -676,6 +805,31 @@ function SyncPage({ snap }: { snap: Snapshot }) {
             </button>
           </div>
         </form>
+        {billing.enabled ? (
+          <section className="card settings" aria-label={labels.billTitle}>
+            <p>
+              {labels.billTitle} · <strong role="status">{billStateText(billing)}</strong>
+            </p>
+            {billing.state === 'ended' ? <p className="muted">{labels.billKept}</p> : null}
+            <div className="inline">
+              {billing.state === 'trial' || billing.state === 'ended' ? (
+                <>
+                  <button className="primary" type="button" disabled={busy} onClick={() => openBilling('checkout', 'monthly')}>
+                    {labels.billMonthly}
+                  </button>
+                  <button className="ghost" type="button" disabled={busy} onClick={() => openBilling('checkout', 'yearly')}>
+                    {labels.billYearly}
+                  </button>
+                </>
+              ) : null}
+              {billing.canManage ? (
+                <button className="ghost" type="button" disabled={busy} onClick={() => openBilling('portal')}>
+                  {labels.billManage}
+                </button>
+              ) : null}
+            </div>
+          </section>
+        ) : null}
         <section className="card settings">
           <div className="inline">
             <button className="ghost" type="button" disabled={busy} onClick={onTogglePair}>

@@ -1,10 +1,12 @@
 import { IPC } from '@shared/ipc'
 import { DEFAULT_SYNC_URL } from '@shared/sync'
-import type { PairingApplyResult, SyncConfigInput, SyncOutcome } from '@shared/types'
+import type { BillingOpenResult, PairingApplyResult, SyncConfigInput, SyncOutcome } from '@shared/types'
 import { handleIpc } from '../ipcHandle'
+import { openSafeExternal } from '../openExternal'
 import { plainRecord } from '../ipcInput'
 import { buildAdvancedReport } from '../report'
 import { createSyncAccount, shouldProvisionAccount } from '../sync/account'
+import { billingLink, fetchPlan } from '../sync/billing'
 import { getSyncConfig, publicSyncState, readSyncCache, setSyncStatus, updateSyncConfig, writeSyncCache } from '../sync/config'
 import { generateRawKey } from '../sync/crypto'
 import { decodePairingLink, encodePairingLink, PAIRING_LINK_MAX } from '../sync/pairing'
@@ -136,6 +138,19 @@ export function registerEdition(): void {
     const outcome = await syncNow()
     if (!outcome.ok) return { ok: false, reason: outcome.reason, state: publicSyncState() }
     return { ok: true, state: publicSyncState(), at: outcome.at, changed: outcome.changed }
+  })
+  // Hosted plan. Only the bearer token goes to the sync server; the Stripe
+  // page opens in the system browser.
+  handleIpc(IPC.syncBilling, () => fetchPlan(getSyncConfig()))
+  handleIpc(IPC.syncBillingOpen, async (_event, input): Promise<BillingOpenResult> => {
+    const record = plainRecord(input)
+    if (!record || (record.kind !== 'checkout' && record.kind !== 'portal')) return { ok: false, reason: 'invalid' }
+    const plan = record.plan === 'yearly' ? 'yearly' : 'monthly'
+    const link = await billingLink(getSyncConfig(), record.kind, plan)
+    if (!link.ok) return link
+    if (!('url' in link)) return { ok: false, reason: 'schema' }
+    if (!(await openSafeExternal(link.url))) return { ok: false, reason: 'schema' }
+    return { ok: true }
   })
   handleIpc(IPC.report, () => buildAdvancedReport())
 }

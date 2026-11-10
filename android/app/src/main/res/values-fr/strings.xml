@@ -673,4 +673,15 @@
     <string name="avg_7d_short">Moy. 7 j</string>
     <string name="vs_yesterday_short">vs hier</string>
     <string name="unlocks_short">Déverrouillages</string>
+    <string name="sync_bill_title">Offre hébergée</string>
+    <string name="sync_bill_trial">Essai : %1$d jours restants</string>
+    <string name="sync_bill_active">Actif</string>
+    <string name="sync_bill_canceling">Actif jusqu’à la fin de la période</string>
+    <string name="sync_bill_past_due">Paiement refusé - mets à jour ta carte</string>
+    <string name="sync_bill_ended">Essai terminé - abonne-toi ou auto-héberge</string>
+    <string name="sync_bill_free">Gratuit</string>
+    <string name="sync_bill_kept">Tes données restent sur ce téléphone et s’exportent. La copie du serveur est gardée 30 jours.</string>
+    <string name="sync_bill_monthly">S’abonner - 2,99 €/mois</string>
+    <string name="sync_bill_yearly">24 €/an</string>
+    <string name="sync_bill_manage">Gérer l’abonnement</string>
 </resources>

@@ -1,10 +1,15 @@
 package app.unscroll.ui.settings
 
 import android.app.Application
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import app.unscroll.R
 import app.unscroll.sync.AndroidSnapshotStore
+import app.unscroll.sync.BillingPlan
+import app.unscroll.sync.SyncBilling
 import app.unscroll.sync.PairingLink
 import app.unscroll.sync.PairingMaterial
 import app.unscroll.sync.SyncBindings
@@ -32,6 +37,7 @@ data class PrivacyUi(
     val paste: String = "",
     val showPairing: Boolean = false,
     val pairingLink: String? = null,
+    val billing: BillingPlan = BillingPlan(),
 )
 
 class PrivacyViewModel(app: Application) : AndroidViewModel(app) {
@@ -125,6 +131,7 @@ class PrivacyViewModel(app: Application) : AndroidViewModel(app) {
                     canTransfer = provider.status().let { status -> status.enabled && status.configured },
                 )
             }
+            refreshBilling()
         }
     }
 
@@ -169,6 +176,52 @@ class PrivacyViewModel(app: Application) : AndroidViewModel(app) {
                 reload(notice = outcome.second, error = true, paste = if (fromPaste) _ui.value.paste else "")
             } else {
                 reload(notice = app.getString(R.string.privacy_sync_paired), error = false)
+            }
+        }
+    }
+
+    /** Hosted plan, shown only when the server reports billing. */
+    fun refreshBilling() {
+        if (!settings.enabled || !SyncRules.validToken(settings.token)) {
+            _ui.update { it.copy(billing = BillingPlan()) }
+            return
+        }
+        val base = settings.baseUrl.ifEmpty { SyncRules.DEFAULT_SYNC_URL }
+        val token = settings.token
+        viewModelScope.launch {
+            val plan = withContext(Dispatchers.IO) { SyncBilling.fetch(base, token) }
+            _ui.update { it.copy(billing = plan) }
+        }
+    }
+
+    fun subscribe(yearly: Boolean) = openBilling(portal = false, yearly = yearly)
+
+    fun manageSubscription() = openBilling(portal = true, yearly = false)
+
+    private fun openBilling(portal: Boolean, yearly: Boolean) {
+        if (_ui.value.busy) return
+        val base = settings.baseUrl.ifEmpty { SyncRules.DEFAULT_SYNC_URL }
+        val token = settings.token
+        viewModelScope.launch {
+            _ui.update { it.copy(busy = true, notice = null) }
+            val (url, reason) = withContext(Dispatchers.IO) { SyncBilling.link(base, token, portal, yearly) }
+            val app = getApplication<Application>()
+            if (url == null) {
+                _ui.update { it.copy(busy = false, notice = reasonText(reason), noticeError = true) }
+                return@launch
+            }
+            val opened = try {
+                app.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                true
+            } catch (_: ActivityNotFoundException) {
+                false
+            }
+            _ui.update {
+                it.copy(
+                    busy = false,
+                    notice = if (opened) null else app.getString(R.string.privacy_reason_network),
+                    noticeError = !opened,
+                )
             }
         }
     }
@@ -268,7 +321,9 @@ class PrivacyViewModel(app: Application) : AndroidViewModel(app) {
             notice = if (showStored) reasonText(storedError) else notice,
             noticeError = if (showStored) true else error,
             paste = paste,
+            billing = _ui.value.billing,
         )
+        refreshBilling()
     }
 
     private data class Attempt(
@@ -288,6 +343,7 @@ class PrivacyViewModel(app: Application) : AndroidViewModel(app) {
             reason == "too-large" -> app.getString(R.string.privacy_reason_too_large)
             reason == "conflict" -> app.getString(R.string.privacy_reason_conflict)
             reason == "http-401" || reason == "http-403" -> app.getString(R.string.privacy_reason_denied)
+            reason == "http-402" -> app.getString(R.string.sync_bill_ended)
             reason != null && reason.startsWith("http-") ->
                 app.getString(R.string.privacy_reason_http, reason.removePrefix("http-"))
             else -> app.getString(R.string.privacy_reason_network)

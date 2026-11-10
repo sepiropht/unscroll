@@ -22,5 +22,7 @@ export const IPC = {
   syncPull: 'sync:pull',
   syncPairingLink: 'sync:pairing-link',
   syncPairingApply: 'sync:pairing-apply',
+  syncBilling: 'sync:billing',
+  syncBillingOpen: 'sync:billing-open',
   report: 'report:advanced'
 } as const

@@ -907,5 +907,41 @@
   },
   "needSiteForFocus": {
     "message": "Öffnen Sie eine Seite, oder richten Sie die Sitzung in den Optionen ein."
+  },
+  "billTitle": {
+    "message": "Gehosteter Tarif"
+  },
+  "billTrial": {
+    "message": "Testphase: noch {days} Tage"
+  },
+  "billActive": {
+    "message": "Aktiv"
+  },
+  "billCanceling": {
+    "message": "Aktiv bis zum Ende des Zeitraums"
+  },
+  "billPastDue": {
+    "message": "Zahlung fehlgeschlagen - Karte aktualisieren"
+  },
+  "billEnded": {
+    "message": "Testphase beendet - abonnieren oder selbst hosten"
+  },
+  "billFree": {
+    "message": "Kostenlos"
+  },
+  "billKept": {
+    "message": "Deine Daten bleiben auf diesem Gerät und lassen sich exportieren. Die Serverkopie bleibt 30 Tage."
+  },
+  "billMonthly": {
+    "message": "Abonnieren - 2,99 €/Monat"
+  },
+  "billYearly": {
+    "message": "24 €/Jahr"
+  },
+  "billManage": {
+    "message": "Abo verwalten"
+  },
+  "billOpened": {
+    "message": "In neuem Tab geöffnet."
   }
 }

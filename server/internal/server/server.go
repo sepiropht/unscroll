@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/sepiropht/unscroll/server/internal/auth"
+	"github.com/sepiropht/unscroll/server/internal/billing"
 	"github.com/sepiropht/unscroll/server/internal/ratelimit"
 	"github.com/sepiropht/unscroll/server/internal/store"
 )
@@ -35,6 +36,7 @@ type Server struct {
 	createLimit *ratelimit.Limiter
 	now         func() time.Time
 	mux         *http.ServeMux
+	billing     *billing.Service
 }
 
 type accountCreated struct {
@@ -65,6 +67,14 @@ func New(st *store.Store, verifier *auth.Verifier, lim *ratelimit.Limiter) *Serv
 	s.mux.HandleFunc("GET /v1/blobs", s.list)
 	s.mux.HandleFunc("GET /v1/blobs/{id}", s.get)
 	s.mux.HandleFunc("PUT /v1/blobs/{id}", s.put)
+	s.mux.HandleFunc("GET /v1/billing", s.billingStatus)
+	s.mux.HandleFunc("POST /v1/billing/checkout", s.billingCheckout)
+	s.mux.HandleFunc("POST /v1/billing/portal", s.billingPortal)
+	s.mux.HandleFunc("POST /v1/billing/webhook", s.billingWebhook)
+	s.mux.HandleFunc("GET /v1/billing/return", s.billingReturn)
+	s.mux.HandleFunc("OPTIONS /v1/billing", s.options)
+	s.mux.HandleFunc("OPTIONS /v1/billing/checkout", s.options)
+	s.mux.HandleFunc("OPTIONS /v1/billing/portal", s.options)
 	s.mux.HandleFunc("OPTIONS /", s.options)
 	s.mux.HandleFunc("OPTIONS /healthz", s.options)
 	s.mux.HandleFunc("OPTIONS /v1/accounts", s.options)
@@ -79,7 +89,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) health(w http.ResponseWriter, r *http.Request) {
-	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "protocol": 1})
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "protocol": 1, "billing": s.billingEnabled()})
 }
 
 func (s *Server) options(w http.ResponseWriter, r *http.Request) {
@@ -108,7 +118,7 @@ func (s *Server) createAccount(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) deleteAccount(w http.ResponseWriter, r *http.Request) {
-	accountID, ok := s.gate(w, r)
+	accountID, ok := s.authenticate(w, r)
 	if !ok {
 		return
 	}
@@ -270,7 +280,16 @@ func (s *Server) resolveAccount(token string) (string, error) {
 	return s.store.LegacyAccountByHash(s.auth.LegacyHash())
 }
 
+// gate authenticates a sync request and applies the hosted billing check.
 func (s *Server) gate(w http.ResponseWriter, r *http.Request) (string, bool) {
+	accountID, ok := s.authenticate(w, r)
+	if !ok || !s.entitled(w, accountID) {
+		return "", false
+	}
+	return accountID, true
+}
+
+func (s *Server) authenticate(w http.ResponseWriter, r *http.Request) (string, bool) {
 	if !s.allowIP(w, r) {
 		return "", false
 	}

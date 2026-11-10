@@ -907,5 +907,41 @@
   },
   "needSiteForFocus": {
     "message": "Open a site, or set the session in Options."
+  },
+  "billTitle": {
+    "message": "Hosted plan"
+  },
+  "billTrial": {
+    "message": "Trial: {days} days left"
+  },
+  "billActive": {
+    "message": "Active"
+  },
+  "billCanceling": {
+    "message": "Active until the end of the period"
+  },
+  "billPastDue": {
+    "message": "Payment failed - update your card"
+  },
+  "billEnded": {
+    "message": "Trial ended - subscribe or self-host"
+  },
+  "billFree": {
+    "message": "Free"
+  },
+  "billKept": {
+    "message": "Your data stays on this device and can be exported. The server copy is kept for 30 days."
+  },
+  "billMonthly": {
+    "message": "Subscribe - €2.99/month"
+  },
+  "billYearly": {
+    "message": "€24/year"
+  },
+  "billManage": {
+    "message": "Manage subscription"
+  },
+  "billOpened": {
+    "message": "Opened in a new tab."
   }
 }

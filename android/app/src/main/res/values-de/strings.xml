@@ -625,4 +625,15 @@
         <item>Der Abschnitt, den Sie schützen, bleibt ganz.</item>
         <item>Nichts Dringendes verlangt diesen Bildschirm jetzt sofort.</item>
     </string-array>
+    <string name="sync_bill_title">Gehosteter Tarif</string>
+    <string name="sync_bill_trial">Testphase: noch %1$d Tage</string>
+    <string name="sync_bill_active">Aktiv</string>
+    <string name="sync_bill_canceling">Aktiv bis zum Ende des Zeitraums</string>
+    <string name="sync_bill_past_due">Zahlung fehlgeschlagen - Karte aktualisieren</string>
+    <string name="sync_bill_ended">Testphase beendet - abonnieren oder selbst hosten</string>
+    <string name="sync_bill_free">Kostenlos</string>
+    <string name="sync_bill_kept">Deine Daten bleiben auf diesem Handy und lassen sich exportieren. Die Serverkopie bleibt 30 Tage.</string>
+    <string name="sync_bill_monthly">Abonnieren - 2,99 €/Monat</string>
+    <string name="sync_bill_yearly">24 €/Jahr</string>
+    <string name="sync_bill_manage">Abo verwalten</string>
 </resources>

@@ -1,12 +1,15 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/sepiropht/unscroll/server/internal/auth"
+	"github.com/sepiropht/unscroll/server/internal/billing"
 	"github.com/sepiropht/unscroll/server/internal/ratelimit"
 	"github.com/sepiropht/unscroll/server/internal/server"
 	"github.com/sepiropht/unscroll/server/internal/store"
@@ -37,6 +40,19 @@ func main() {
 	defer st.Close()
 
 	h := server.New(st, verifier, ratelimit.New(60))
+
+	// Hosted billing is optional. Self-hosted servers leave the Stripe env
+	// unset and sync stays free with no trial and no limits.
+	bcfg, billingOn, err := billing.ConfigFromEnv()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if billingOn {
+		svc := billing.New(bcfg, st)
+		h.SetBilling(svc)
+		go svc.RunPurge(context.Background(), time.Hour)
+		log.Printf("hosted billing enabled (trial %d days, grace %d days)", bcfg.TrialDays, bcfg.GraceDays)
+	}
 	log.Printf("unscroll-sync-server listening on %s", addr)
 	if err := http.ListenAndServe(addr, h); err != nil {
 		log.Fatal(err)

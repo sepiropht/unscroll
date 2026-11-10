@@ -13,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -79,7 +80,53 @@ fun SyncScreen(
                     .padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
+                if (ui.billing.enabled) BillingCard(ui, vm)
                 SyncCard(ui, vm)
+            }
+        }
+    }
+}
+
+@Composable
+private fun BillingCard(ui: PrivacyUi, vm: PrivacyViewModel) {
+    val plan = ui.billing
+    Card(
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+    ) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(stringResource(R.string.sync_bill_title), style = MaterialTheme.typography.titleMedium)
+            val state = when (plan.state) {
+                "trial" -> stringResource(R.string.sync_bill_trial, plan.daysLeft)
+                "active" -> stringResource(if (plan.cancelAtPeriodEnd) R.string.sync_bill_canceling else R.string.sync_bill_active)
+                "past_due" -> stringResource(R.string.sync_bill_past_due)
+                "ended" -> stringResource(R.string.sync_bill_ended)
+                else -> stringResource(R.string.sync_bill_free)
+            }
+            Text(
+                state,
+                style = MaterialTheme.typography.bodyLarge,
+                color = if (plan.state == "ended" || plan.state == "past_due") MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
+            )
+            if (plan.state == "ended") {
+                Text(
+                    stringResource(R.string.sync_bill_kept),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            if (plan.state == "trial" || plan.state == "ended") {
+                Button(onClick = { vm.subscribe(yearly = false) }, enabled = !ui.busy, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.sync_bill_monthly))
+                }
+                OutlinedButton(onClick = { vm.subscribe(yearly = true) }, enabled = !ui.busy, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.sync_bill_yearly))
+                }
+            }
+            if (plan.canManage) {
+                OutlinedButton(onClick = vm::manageSubscription, enabled = !ui.busy, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.sync_bill_manage))
+                }
             }
         }
     }

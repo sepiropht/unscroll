@@ -115,9 +115,16 @@ export ADDR=127.0.0.1:8781           # listen address
 
 Keep the server on localhost and put a TLS reverse proxy (for example Caddy) in front. Never commit tokens, token hashes, or env files. Full details: [`server/README.md`](server/README.md), protocol: [`docs/sync-protocol.md`](docs/sync-protocol.md), pairing: [`docs/pairing.md`](docs/pairing.md).
 
-## Hosted sync (coming soon)
+## Hosted sync
 
-If you would rather not run a server, an optional hosted sync service is planned: **€2.99/month or €24/year, with a 14-day free trial**. It is the only paid part of Unscroll and it only pays for hosting. The apps stay free and complete, and self-hosting stays free. Billing is not available yet.
+If you would rather not run a server, the default server is a hosted sync service: **€2.99/month or €24/year, with a 14-day free trial**. It is the only paid part of Unscroll and it only pays for hosting. The apps stay free and complete, with no feature gating, and self-hosting stays free and unlimited.
+
+- The trial starts the first time a device syncs. No card is needed.
+- The Sync screen of each app shows the plan (Trial: N days left / Active / Ended) with **Subscribe** and **Manage subscription** buttons. Payment happens on Stripe Checkout; cancel or change in the Stripe customer portal.
+- When the trial ends without a subscription, the server answers `402` and the apps show "Trial ended - subscribe or self-host". Your data stays on your devices and can still be exported. The encrypted server copy is kept for 30 days, then deleted.
+- Accounts stay anonymous. Stripe only receives the anonymous account id and what you type in Checkout. Usage data never goes to Stripe, and end-to-end encryption is unchanged.
+
+Billing is optional server code: it is off unless the operator sets the Stripe variables (see [server/README.md](server/README.md#hosted-billing-optional)). A self-hosted server shows no plan at all.
 
 ## License
 

@@ -907,5 +907,41 @@
   },
   "needSiteForFocus": {
     "message": "Ouvrez un site, ou réglez la session dans Options."
+  },
+  "billTitle": {
+    "message": "Offre hébergée"
+  },
+  "billTrial": {
+    "message": "Essai : {days} jours restants"
+  },
+  "billActive": {
+    "message": "Actif"
+  },
+  "billCanceling": {
+    "message": "Actif jusqu’à la fin de la période"
+  },
+  "billPastDue": {
+    "message": "Paiement refusé - mets à jour ta carte"
+  },
+  "billEnded": {
+    "message": "Essai terminé - abonne-toi ou auto-héberge"
+  },
+  "billFree": {
+    "message": "Gratuit"
+  },
+  "billKept": {
+    "message": "Tes données restent sur cet appareil et s’exportent. La copie du serveur est gardée 30 jours."
+  },
+  "billMonthly": {
+    "message": "S’abonner - 2,99 €/mois"
+  },
+  "billYearly": {
+    "message": "24 €/an"
+  },
+  "billManage": {
+    "message": "Gérer l’abonnement"
+  },
+  "billOpened": {
+    "message": "Ouvert dans un nouvel onglet."
   }
 }

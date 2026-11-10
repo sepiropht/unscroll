@@ -34,7 +34,11 @@ Endpoints are under `BASE` (do not append `/v1/...` twice if the user already in
 
 ### `GET /healthz` (no auth)
 
-`200` `application/json` → `{"ok":true,"protocol":1}`
+`200` `application/json` → `{"ok":true,"protocol":1,"billing":false}`. `billing` is `true` only on a server with hosted billing turned on.
+
+### Hosted billing (optional)
+
+Only when the server enables it (see `server/README.md`). `GET /v1/billing` (auth) returns the plan; `{"enabled":false}` on self-hosted servers, and older servers answer `404`, which clients treat the same. `POST /v1/billing/checkout` and `POST /v1/billing/portal` return `{"url":"https://…stripe.com/…"}`; clients open only https URLs on `stripe.com`. Blob routes answer `402` (`subscription_required`) after the trial ends without a subscription; clients show "Trial ended - subscribe or self-host" and keep local data.
 
 ### `POST /v1/accounts` (no auth)
 

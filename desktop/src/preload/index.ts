@@ -23,6 +23,8 @@ const api: UnscrollApi = {
   pullSync: () => ipcRenderer.invoke(IPC.syncPull),
   getPairingLink: () => ipcRenderer.invoke(IPC.syncPairingLink),
   applyPairingLink: (link: string) => ipcRenderer.invoke(IPC.syncPairingApply, link),
+  getBilling: () => ipcRenderer.invoke(IPC.syncBilling),
+  openBilling: (kind, plan) => ipcRenderer.invoke(IPC.syncBillingOpen, { kind, plan }),
   getReport: () => ipcRenderer.invoke(IPC.report),
   onTick: (cb) => {
     const listener = (_event: IpcRendererEvent, snapshot: Snapshot) => cb(snapshot)

@@ -17,3 +17,17 @@ export function safeExternalHref(value: string): string | null {
   if (!host.includes('.') || /^\d{1,3}(\.\d{1,3}){3}$/.test(host)) return null
   return parsed.href
 }
+
+/** Only https pages on stripe.com may be opened from a server answer. */
+export function safeStripeUrl(value: unknown): string | null {
+  if (typeof value !== 'string' || value.length > 4000 || /[\u0000-\u001F\u007F\\]/.test(value)) return null
+  try {
+    const url = new URL(value)
+    if (url.protocol !== 'https:' || url.username || url.password) return null
+    const host = url.hostname.toLowerCase()
+    if (host !== 'stripe.com' && !host.endsWith('.stripe.com')) return null
+    return url.href
+  } catch {
+    return null
+  }
+}

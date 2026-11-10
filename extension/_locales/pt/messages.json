@@ -907,5 +907,41 @@
   },
   "needSiteForFocus": {
     "message": "Abra um sítio, ou defina a sessão em Opções."
+  },
+  "billTitle": {
+    "message": "Plano hospedado"
+  },
+  "billTrial": {
+    "message": "Teste: faltam {days} dias"
+  },
+  "billActive": {
+    "message": "Ativo"
+  },
+  "billCanceling": {
+    "message": "Ativo até o fim do período"
+  },
+  "billPastDue": {
+    "message": "Pagamento falhou - atualize seu cartão"
+  },
+  "billEnded": {
+    "message": "Teste encerrado - assine ou hospede você mesmo"
+  },
+  "billFree": {
+    "message": "Grátis"
+  },
+  "billKept": {
+    "message": "Seus dados ficam neste dispositivo e podem ser exportados. A cópia do servidor fica 30 dias."
+  },
+  "billMonthly": {
+    "message": "Assinar - 2,99 €/mês"
+  },
+  "billYearly": {
+    "message": "24 €/ano"
+  },
+  "billManage": {
+    "message": "Gerenciar assinatura"
+  },
+  "billOpened": {
+    "message": "Aberto em uma nova aba."
   }
 }

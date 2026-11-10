@@ -907,5 +907,41 @@
   },
   "needSiteForFocus": {
     "message": "Abra un sitio, o configure la sesión en Opciones."
+  },
+  "billTitle": {
+    "message": "Plan alojado"
+  },
+  "billTrial": {
+    "message": "Prueba: quedan {days} días"
+  },
+  "billActive": {
+    "message": "Activo"
+  },
+  "billCanceling": {
+    "message": "Activo hasta el final del periodo"
+  },
+  "billPastDue": {
+    "message": "Pago fallido - actualiza tu tarjeta"
+  },
+  "billEnded": {
+    "message": "Prueba terminada - suscríbete o alójalo tú"
+  },
+  "billFree": {
+    "message": "Gratis"
+  },
+  "billKept": {
+    "message": "Tus datos siguen en este dispositivo y se pueden exportar. La copia del servidor se guarda 30 días."
+  },
+  "billMonthly": {
+    "message": "Suscribirse - 2,99 €/mes"
+  },
+  "billYearly": {
+    "message": "24 €/año"
+  },
+  "billManage": {
+    "message": "Gestionar suscripción"
+  },
+  "billOpened": {
+    "message": "Abierto en una pestaña nueva."
   }
 }

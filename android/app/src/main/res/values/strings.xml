@@ -659,4 +659,15 @@
     <string name="avg_7d_short">7-day avg</string>
     <string name="vs_yesterday_short">vs yesterday</string>
     <string name="unlocks_short">Unlocks</string>
+    <string name="sync_bill_title">Hosted plan</string>
+    <string name="sync_bill_trial">Trial: %1$d days left</string>
+    <string name="sync_bill_active">Active</string>
+    <string name="sync_bill_canceling">Active until the end of the period</string>
+    <string name="sync_bill_past_due">Payment failed - update your card</string>
+    <string name="sync_bill_ended">Trial ended - subscribe or self-host</string>
+    <string name="sync_bill_free">Free</string>
+    <string name="sync_bill_kept">Your data stays on this phone and can be exported. The server copy is kept for 30 days.</string>
+    <string name="sync_bill_monthly">Subscribe - €2.99/month</string>
+    <string name="sync_bill_yearly">€24/year</string>
+    <string name="sync_bill_manage">Manage subscription</string>
 </resources>

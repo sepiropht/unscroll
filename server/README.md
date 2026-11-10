@@ -17,7 +17,7 @@ Enabling sync in the app does steps 1–3. The user does not create an account b
 
 ### Hosted convenience
 
-The default public URL in the app is [https://sync.unscroll.elimbi.com](https://sync.unscroll.elimbi.com). That hosted service may later be a paid convenience (€2.99/month or €24/year, with a 14-day trial). Self-hosting this server stays free. This repository does not implement billing.
+The default public URL in the app is [https://sync.unscroll.elimbi.com](https://sync.unscroll.elimbi.com). That hosted service is a paid convenience (€2.99/month or €24/year, with a 14-day trial). Self-hosting this server stays free: billing is off unless you set the Stripe variables below. See [Hosted billing](#hosted-billing-optional).
 
 Self-hosters run this server and change that URL in the app to their own origin (scheme + host, no token in the URL).
 
@@ -107,6 +107,31 @@ sync.example.com {
 ```
 
 Point the app at `https://sync.example.com`. Do not publish port 8781 on the public internet.
+
+## Hosted billing (optional)
+
+Off by default. Leave these unset on a self-hosted server: no trial, no limit, `GET /v1/billing` answers `{"enabled":false}` and the apps show no plan. Set both Stripe secrets to turn it on (the server refuses to start with only one).
+
+| Env | Meaning |
+| --- | --- |
+| `STRIPE_SECRET_KEY` | Stripe secret (or restricted) API key. Never commit it. |
+| `STRIPE_WEBHOOK_SECRET` | Signing secret (`whsec_…`) of the webhook endpoint below. |
+| `UNSCROLL_PUBLIC_URL` | Required with billing. Public https origin of this server, used for Checkout and portal return URLs. Never taken from the `Host` header. |
+| `STRIPE_PRICE_LOOKUP_MONTHLY` | Optional. Price lookup key, default `unscroll_sync_monthly`. |
+| `STRIPE_PRICE_LOOKUP_YEARLY` | Optional. Price lookup key, default `unscroll_sync_yearly`. |
+| `STRIPE_AUTOMATIC_TAX` | Optional. `1` turns on Stripe Tax in Checkout. Off by default. |
+| `UNSCROLL_TRIAL_DAYS` | Optional. Default `14`. |
+| `UNSCROLL_GRACE_DAYS` | Optional. Days the ciphertext is kept after access ends. Default `30`. |
+
+How it works:
+
+- **Trial.** Starts on the first authenticated blob request of an account, server-side, no card. Reading the plan does not start it.
+- **Checkout.** `POST /v1/billing/checkout` with `{"plan":"monthly"|"yearly"}` returns `{"url":…}`: a Stripe Checkout Session in `subscription` mode, priced by lookup key, promotion codes allowed. The anonymous account id goes in `client_reference_id` and in the session and subscription `metadata.account_id`. Remaining trial days carry over as the Stripe trial when more than 48 hours are left. Nothing else is sent: no usage data, no blob content.
+- **Portal.** `POST /v1/billing/portal` returns a Stripe Customer Portal URL to cancel or update payment. Configure the portal once in the Stripe dashboard.
+- **Status.** `GET /v1/billing` (bearer) returns `{"enabled":true,"state":"trial|active|past_due|ended|free","daysLeft":N,"canManage":bool,…}`. Legacy bootstrap accounts are `free`.
+- **Webhook.** `POST /v1/billing/webhook`. Register `https://<your host>/v1/billing/webhook` in Stripe with the events `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.payment_failed`. The `Stripe-Signature` header is verified (HMAC-SHA256, 5-minute tolerance). Events are idempotent by id, and older subscription events never override newer ones.
+- **402.** After the trial without an `active`/`trialing` subscription, blob routes answer `402` with `{"error":"subscription_required","message":"Trial ended - subscribe or self-host",…}`. `past_due` keeps syncing while Stripe retries. Plan, checkout, portal and `DELETE /v1/accounts` keep working.
+- **Grace.** Data is never deleted immediately. The server copy of an ended account is deleted `UNSCROLL_GRACE_DAYS` (30) days after access ended (trial end or paid period end). The account row stays, so subscribing later re-uploads from the devices. Local data on devices is never touched.
 
 ## HTTP
 

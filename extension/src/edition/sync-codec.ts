@@ -61,7 +61,7 @@ export function usageBlobId(deviceId: string): string {
   return `device.browser.${deviceId}`;
 }
 
-function syncRoot(base: string): string {
+export function syncRoot(base: string): string {
   let path = base.replace(/\/+$/, '');
   if (path.endsWith('/v1/snapshot')) path = path.slice(0, -'/v1/snapshot'.length).replace(/\/+$/, '');
   if (path.endsWith('/v1/blobs')) path = path.slice(0, -'/v1/blobs'.length).replace(/\/+$/, '');
