@@ -11,9 +11,13 @@ The interface follows the browser language (English by default; also French, Spa
 ```bash
 npm install
 npm test
-npm run build   # output in dist/
-npm run zip     # unscroll-extension.zip
+npm run build            # output in dist/
+npm run zip              # unscroll-extension.zip (Chrome, Edge, Firefox)
+npm run package:chrome   # store/unscroll-<version>-chrome.zip (Chrome Web Store pack)
+npm run validate:chrome  # load the build in headless Chromium and check the console
 ```
+
+The Chrome Web Store listing, graphics, privacy answers, and a French upload checklist live in [`store/`](store/).
 
 Load `dist/`:
 

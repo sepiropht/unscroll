@@ -4,3 +4,4 @@ dist/
 *.log
 grok-*.log
 chain.log
+!store/**/*.zip

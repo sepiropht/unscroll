@@ -11,6 +11,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: false,
+    sourcemap: false,
     target: 'es2022',
     rollupOptions: {
       input: resolve(root, 'src/background/index.ts'),

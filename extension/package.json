@@ -17,7 +17,9 @@
     "build:raw": "npm run icons && npm run check && tsc --noEmit && vite build && vite build --config vite.background.config.ts && node scripts/assert-edition.mjs",
     "zip": "node scripts/zip-dist.mjs",
     "zip:oss": "npm run zip",
-    "zip:pro": "npm run zip"
+    "zip:pro": "npm run zip",
+    "package:chrome": "npm run build && node scripts/package-chrome.mjs",
+    "validate:chrome": "python3 scripts/validate-chrome.py"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.304",

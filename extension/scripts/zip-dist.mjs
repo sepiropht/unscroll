@@ -45,7 +45,12 @@ try {
   console.error('dist/ is missing. Run npm run build first.');
   process.exit(1);
 }
-files = files.filter((file) => relative(dist, file).split('\\').join('/') !== 'edition.txt');
+files = files.filter((file) => {
+  const name = relative(dist, file).split('\\').join('/');
+  if (name === 'edition.txt' || name.startsWith('.')) return false;
+  if (name.endsWith('.map') || name.endsWith('.ts')) return false;
+  return true;
+});
 if (files.length === 0) {
   console.error('dist/ is empty. Run npm run build first.');
   process.exit(1);
