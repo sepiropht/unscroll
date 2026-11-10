@@ -4,10 +4,15 @@
 
 No account, no ads, no trackers. Sync between devices is optional and end-to-end encrypted.
 
+**Website:** [https://unscroll.elimbi.com](https://unscroll.elimbi.com)
+
 <p align="center">
-  <img src="docs/screenshots/desktop-home.png" alt="Unscroll desktop: today's screen time" width="560">
-  <img src="docs/screenshots/extension-popup.png" alt="Unscroll browser extension popup" width="260">
+  <img src="docs/screenshots/hero.webp" alt="Unscroll on Android, desktop, and in the browser, showing today's screen time with example data." width="920">
 </p>
+
+| Android | Desktop | Browser extension |
+| :---: | :---: | :---: |
+| <img src="docs/screenshots/android.webp" alt="Unscroll for Android: today's screen time, hourly chart, and limits on the home screen (example data)." width="260"> | <img src="docs/screenshots/desktop.webp" alt="Unscroll for desktop: today's total, app list, hourly chart, last seven days, and a category split (example data)." width="260"> | <img src="docs/screenshots/extension.webp" alt="Unscroll browser extension popup: today's time, top sites, and a focus button (example data)." width="260"> |
 
 ## Features
 
