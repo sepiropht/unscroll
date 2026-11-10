@@ -21,6 +21,16 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
+
+    <!-- Launchable apps stay visible even if QUERY_ALL_PACKAGES is not granted.
+         Labels for non-launcher packages that appear in usage stats still need it. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
     <application
         android:name=".UnscrollApp"
         android:allowBackup="true"
@@ -133,7 +143,7 @@
             android:foregroundServiceType="specialUse">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="Minuterie de concentration choisie par la personne, avec compte à rebours." />
+                android:value="Countdown timer for a focus session the person started." />
         </service>
 
         <service

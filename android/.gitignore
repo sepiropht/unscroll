@@ -12,3 +12,7 @@ auth.json
 captures/
 .externalNativeBuild/
 .cxx/
+
+# Signing material (never commit)
+keystore.properties
+*keystore.properties

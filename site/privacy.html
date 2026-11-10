@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy — Unscroll</title>
+  <meta name="description" content="Unscroll is local-first. The developer collects no data. Optional end-to-end encrypted sync, self-hosted or Unscroll Cloud. Stripe receives only an anonymous account id and Checkout details.">
+  <meta name="theme-color" content="#0c1016">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .policy { max-width: 42rem; }
+    .policy h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; color: var(--paper); letter-spacing: -0.03em; margin: 0 0 0.75rem; }
+    .policy .lede { font-size: 1.125rem; color: var(--paper); margin: 0 0 1.75rem; }
+    .policy h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; color: var(--paper); margin: 2.25rem 0 0.75rem; }
+    .policy p, .policy li { color: var(--mist); }
+    .policy p { margin: 0 0 1rem; }
+    .policy ul { list-style: disc; padding-left: 1.25rem; margin: 0 0 1rem; }
+    .policy li { margin: 0 0 0.4rem; }
+    .policy a { color: var(--hour-soft); }
+    .policy .updated { color: var(--dim); font-size: 0.95rem; margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content" data-i18n="skip">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="index.html" translate="no">
+        <svg class="mark" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#141a24"/>
+          <circle cx="16" cy="16" r="8.25" fill="none" stroke="#314056" stroke-width="3"/>
+          <circle cx="16" cy="16" r="8.25" fill="none" stroke="#e39a56" stroke-width="3" stroke-linecap="round" stroke-dasharray="34 52" transform="rotate(-80 16 16)"/>
+        </svg>
+        Unscroll
+      </a>
+      <nav class="nav-links" aria-label="Primary" data-i18n-aria="nav.primary">
+        <a href="index.html#products" data-i18n="nav.apps">Apps</a>
+        <a href="index.html#features" data-i18n="nav.features">Features</a>
+        <a href="index.html#self-host" data-i18n="nav.selfhost">Self-host</a>
+        <a href="cloud.html" data-i18n="nav.cloud">Cloud</a>
+        <a href="privacy.html" aria-current="page" data-i18n="privacy.nav">Privacy</a>
+      </nav>
+      <div class="lang" role="group" aria-label="Language" data-i18n-aria="lang.group">
+        <button type="button" data-lang="en" aria-pressed="true" aria-label="English">EN</button>
+        <button type="button" data-lang="fr" aria-pressed="false" aria-label="Français">FR</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="content" tabindex="-1">
+    <section class="section" style="padding-top: 3rem;">
+      <div class="wrap policy" data-reveal>
+        <p class="eyebrow" data-i18n="privacy.eyebrow">Privacy policy</p>
+        <h1 data-i18n="privacy.title">Your data stays with you.</h1>
+        <p class="updated" data-i18n="privacy.updated">Last updated: 10 November 2026</p>
+        <p class="lede" data-i18n="privacy.lede">Unscroll is a local-first, open-source screen-time app. The developer does not collect your usage, does not show ads, and does not use trackers. This page describes what stays on your devices, what optional sync does, and how Unscroll Cloud payments work.</p>
+
+        <h2 data-i18n="privacy.ondevice.title">On your devices</h2>
+        <p data-i18n="privacy.ondevice.body">Measurements, limits, websites, reminders, and settings are stored on the device where you use Unscroll. There is no account to create to use the apps. You can export or import a JSON backup yourself. Uninstalling the app removes what was stored on that device.</p>
+
+        <h2 data-i18n="privacy.seen.title">What the apps can see</h2>
+        <p data-i18n="privacy.seen.body">Usage access, when you grant it, is used to count time spent in each app. The accessibility service, when you enable it after an in-app explanation and your consent, recognizes the app in the foreground and reads the address bar of known browsers to estimate time per site and apply a limit you chose. It does not read your messages, your passwords, or what you type. The notification counter, when you enable it, stores only a count, not the title or the text. The camera, when you use it, only scans a pairing QR code; decoding runs on the device. Nothing in this section is sent off the device unless you turn on optional sync.</p>
+
+        <h2 data-i18n="privacy.sync.title">Optional end-to-end encrypted sync</h2>
+        <p data-i18n="privacy.sync.body">Sync is off until you turn it on. You choose the server: your own, or Unscroll Cloud. The device encrypts the backup with a key that stays on your devices (AES-GCM) and sends only ciphertext. The server stores an anonymous account identifier (a hash of your token) and that ciphertext. It cannot read your measurements, limits, or settings.</p>
+        <p data-i18n="privacy.sync.leave">If you stop using a hosted account (the trial ends without a subscription, or you cancel), the encrypted server copy is kept for 30 days and then deleted. Data on your devices is not deleted by that process. You can keep a JSON export or point the apps at a server you host.</p>
+
+        <h2 data-i18n="privacy.cloud.title">Unscroll Cloud and Stripe</h2>
+        <p data-i18n="privacy.cloud.body">Unscroll Cloud is the hosted sync server. It is optional. Self-hosted sync is free. Cloud costs €2.99/month or €24/year, with a 14-day trial and no card required to start. Payments are processed by Stripe. We send Stripe only an anonymous account id. Stripe also collects whatever you enter in Stripe Checkout (for example a payment method, name, email, and billing address). Usage data never goes to Stripe. End-to-end encryption is unchanged if you subscribe.</p>
+
+        <h2 data-i18n="privacy.site.title">This website</h2>
+        <p data-i18n="privacy.site.body">This site does not set advertising cookies and does not embed an audience tracker. A language preference may be saved in your browser (localStorage) so the page can stay in English or French. Server logs on the host may record a standard request (date, IP address, page) for operation and abuse prevention, and are not used for advertising.</p>
+
+        <h2 data-i18n="privacy.contact.title">Contact</h2>
+        <p><span data-i18n="privacy.contact.body">Questions about this policy, or a request about hosted sync data, can be sent to </span><a href="mailto:williamelimbi@gmail.com">williamelimbi@gmail.com</a>.</p>
+        <p><a class="text-link" href="https://github.com/sepiropht/unscroll" rel="noopener noreferrer" data-i18n="privacy.source">Source code and self-hosting instructions are on GitHub.</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <a class="wordmark" href="index.html" translate="no">
+          <svg class="mark" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="#141a24"/>
+            <circle cx="16" cy="16" r="8.25" fill="none" stroke="#314056" stroke-width="3"/>
+            <circle cx="16" cy="16" r="8.25" fill="none" stroke="#e39a56" stroke-width="3" stroke-linecap="round" stroke-dasharray="34 52" transform="rotate(-80 16 16)"/>
+          </svg>
+          Unscroll
+        </a>
+        <p class="footer-tag" data-i18n="footer.tag">Open-source, local-first screen time. No trackers on this page.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer" data-i18n-aria="footer.nav">
+        <a href="index.html#products" data-i18n="nav.apps">Apps</a>
+        <a href="index.html#self-host" data-i18n="nav.selfhost">Self-host</a>
+        <a href="cloud.html" data-i18n="nav.cloud">Cloud</a>
+        <a href="privacy.html" aria-current="page" data-i18n="privacy.nav">Privacy</a>
+        <a href="https://github.com/sepiropht/unscroll" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <div class="footer-end">
+        <div class="lang" role="group" aria-label="Language" data-i18n-aria="lang.group">
+          <button type="button" data-lang="en" aria-pressed="true" aria-label="English">EN</button>
+          <button type="button" data-lang="fr" aria-pressed="false" aria-label="Français">FR</button>
+        </div>
+        <p class="footer-note"><a class="text-link" href="https://github.com/sepiropht/unscroll/blob/main/LICENSE" rel="noopener noreferrer" data-i18n="footer.note">Licensed under AGPL-3.0.</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    (function () {
+      var en = {
+        "meta.title": "Privacy — Unscroll",
+        "meta.description": "Unscroll is local-first. The developer collects no data. Optional end-to-end encrypted sync, self-hosted or Unscroll Cloud. Stripe receives only an anonymous account id and Checkout details.",
+        "privacy.nav": "Privacy",
+        "privacy.eyebrow": "Privacy policy",
+        "privacy.title": "Your data stays with you.",
+        "privacy.updated": "Last updated: 10 November 2026",
+        "privacy.lede": "Unscroll is a local-first, open-source screen-time app. The developer does not collect your usage, does not show ads, and does not use trackers. This page describes what stays on your devices, what optional sync does, and how Unscroll Cloud payments work.",
+        "privacy.ondevice.title": "On your devices",
+        "privacy.ondevice.body": "Measurements, limits, websites, reminders, and settings are stored on the device where you use Unscroll. There is no account to create to use the apps. You can export or import a JSON backup yourself. Uninstalling the app removes what was stored on that device.",
+        "privacy.seen.title": "What the apps can see",
+        "privacy.seen.body": "Usage access, when you grant it, is used to count time spent in each app. The accessibility service, when you enable it after an in-app explanation and your consent, recognizes the app in the foreground and reads the address bar of known browsers to estimate time per site and apply a limit you chose. It does not read your messages, your passwords, or what you type. The notification counter, when you enable it, stores only a count, not the title or the text. The camera, when you use it, only scans a pairing QR code; decoding runs on the device. Nothing in this section is sent off the device unless you turn on optional sync.",
+        "privacy.sync.title": "Optional end-to-end encrypted sync",
+        "privacy.sync.body": "Sync is off until you turn it on. You choose the server: your own, or Unscroll Cloud. The device encrypts the backup with a key that stays on your devices (AES-GCM) and sends only ciphertext. The server stores an anonymous account identifier (a hash of your token) and that ciphertext. It cannot read your measurements, limits, or settings.",
+        "privacy.sync.leave": "If you stop using a hosted account (the trial ends without a subscription, or you cancel), the encrypted server copy is kept for 30 days and then deleted. Data on your devices is not deleted by that process. You can keep a JSON export or point the apps at a server you host.",
+        "privacy.cloud.title": "Unscroll Cloud and Stripe",
+        "privacy.cloud.body": "Unscroll Cloud is the hosted sync server. It is optional. Self-hosted sync is free. Cloud costs €2.99/month or €24/year, with a 14-day trial and no card required to start. Payments are processed by Stripe. We send Stripe only an anonymous account id. Stripe also collects whatever you enter in Stripe Checkout (for example a payment method, name, email, and billing address). Usage data never goes to Stripe. End-to-end encryption is unchanged if you subscribe.",
+        "privacy.site.title": "This website",
+        "privacy.site.body": "This site does not set advertising cookies and does not embed an audience tracker. A language preference may be saved in your browser (localStorage) so the page can stay in English or French. Server logs on the host may record a standard request (date, IP address, page) for operation and abuse prevention, and are not used for advertising.",
+        "privacy.contact.title": "Contact",
+        "privacy.contact.body": "Questions about this policy, or a request about hosted sync data, can be sent to ",
+        "privacy.source": "Source code and self-hosting instructions are on GitHub."
+      };
+      var fr = {
+        "meta.title": "Confidentialité — Unscroll",
+        "meta.description": "Unscroll est local d'abord. Le développeur ne collecte aucune donnée. La sync chiffrée de bout en bout est facultative, auto-hébergée ou via Unscroll Cloud. Stripe ne reçoit qu'un identifiant de compte anonyme et les informations de Checkout.",
+        "privacy.nav": "Confidentialité",
+        "privacy.eyebrow": "Politique de confidentialité",
+        "privacy.title": "Vos données restent les vôtres.",
+        "privacy.updated": "Dernière mise à jour : 10 novembre 2026",
+        "privacy.lede": "Unscroll est une application de temps d'écran open source, locale d'abord. Le développeur ne collecte pas votre usage, n'affiche pas de publicité, et n'utilise pas de traceur. Cette page décrit ce qui reste sur vos appareils, ce que fait la sync facultative, et comment fonctionnent les paiements Unscroll Cloud.",
+        "privacy.ondevice.title": "Sur vos appareils",
+        "privacy.ondevice.body": "Les mesures, les limites, les sites, les rappels et les réglages sont stockés sur l'appareil où vous utilisez Unscroll. Aucun compte n'est requis pour se servir des applications. Vous pouvez exporter ou importer vous-même une sauvegarde JSON. Désinstaller l'application enlève ce qui était stocké sur cet appareil.",
+        "privacy.seen.title": "Ce que voient les applications",
+        "privacy.seen.body": "L'accès aux données d'usage, lorsque vous l'accordez, sert à compter le temps passé dans chaque application. Le service d'accessibilité, lorsque vous l'activez après une explication dans l'application et votre consentement, reconnaît l'application au premier plan et lit la barre d'adresse des navigateurs connus afin d'estimer le temps par site et d'appliquer une limite que vous avez choisie. Il ne lit pas vos messages, vos mots de passe, ni ce que vous tapez. Le compteur de notifications, lorsque vous l'activez, ne conserve qu'un nombre, pas le titre ni le texte. L'appareil photo, lorsque vous vous en servez, ne scanne qu'un QR de jumelage ; le décodage se fait sur l'appareil. Rien de tout cela n'est envoyé hors de l'appareil, sauf si vous activez la sync facultative.",
+        "privacy.sync.title": "Sync facultative, chiffrée de bout en bout",
+        "privacy.sync.body": "La sync est éteinte tant que vous ne l'allumez pas. Vous choisissez le serveur : le vôtre, ou Unscroll Cloud. L'appareil chiffre la sauvegarde avec une clé qui reste sur vos appareils (AES-GCM) et n'envoie que du chiffré. Le serveur conserve un identifiant de compte anonyme (un hash de votre jeton) et ce chiffré. Il ne peut pas lire vos mesures, vos limites ni vos réglages.",
+        "privacy.sync.leave": "Si vous cessez d'utiliser un compte hébergé (fin d'essai sans abonnement, ou résiliation), la copie chiffrée sur le serveur est conservée 30 jours, puis supprimée. Les données sur vos appareils ne sont pas effacées par cela. Vous pouvez garder un export JSON ou pointer les applications vers un serveur que vous hébergez.",
+        "privacy.cloud.title": "Unscroll Cloud et Stripe",
+        "privacy.cloud.body": "Unscroll Cloud est le serveur de sync hébergé. Il est facultatif. La sync auto-hébergée est gratuite. Cloud coûte 2,99 €/mois ou 24 €/an, avec 14 jours d'essai et sans carte pour commencer. Les paiements sont traités par Stripe. Nous envoyons à Stripe uniquement un identifiant de compte anonyme. Stripe collecte aussi ce que vous saisissez dans Stripe Checkout (par exemple un moyen de paiement, un nom, un e-mail et une adresse de facturation). Les données d'usage ne vont jamais à Stripe. Le chiffrement de bout en bout ne change pas si vous vous abonnez.",
+        "privacy.site.title": "Ce site",
+        "privacy.site.body": "Ce site ne dépose pas de cookie publicitaire et n'intègre pas de traceur d'audience. Une préférence de langue peut être enregistrée dans votre navigateur (localStorage) pour garder la page en anglais ou en français. Les journaux du serveur d'hébergement peuvent consigner une requête ordinaire (date, adresse IP, page) pour l'exploitation et la prévention des abus, et ne servent pas à la publicité.",
+        "privacy.contact.title": "Contact",
+        "privacy.contact.body": "Pour une question sur cette politique, ou une demande au sujet des données de sync hébergée, écrivez à ",
+        "privacy.source": "Le code source et les instructions d'auto-hébergement sont sur GitHub."
+      };
+      if (typeof STRINGS === "undefined" || typeof applyLang !== "function") return;
+      Object.assign(STRINGS.en, en);
+      Object.assign(STRINGS.fr, fr);
+      applyLang(typeof readLang === "function" ? readLang() : "en", false);
+    })();
+  </script>
+</body>
+</html>

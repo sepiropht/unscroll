@@ -29,3 +29,18 @@ Each permission is asked only when you use the feature that needs it:
 ## Sync
 
 Open **More → Sync**, turn it on, then **Pair a device** to show a QR code, or **Scan a QR code** / **Paste a link** on the other device. See [`../docs/pairing.md`](../docs/pairing.md).
+
+## Release build
+
+`versionCode` is 1 and `versionName` is 1.0.0. The target SDK is 36, which meets the Google Play requirement for new apps as of 31 August 2026.
+
+A release build is minified with R8. Signing is optional, so a contributor can still run `./gradlew :app:assembleRelease` without a keystore; the bundle or APK is then left unsigned.
+
+To sign a Play upload (the upload key, used with Play App Signing):
+
+```bash
+export UNSCROLL_KEYSTORE_PROPERTIES=/path/to/unscroll-keystore.properties
+./gradlew :app:bundleRelease :app:assembleRelease
+```
+
+The properties file is not in the repository. It must define `storeFile`, `storePassword`, `keyAlias`, and `keyPassword`. You can also pass `-PUNSCROLL_KEYSTORE_PROPERTIES=...` instead of the environment variable.
