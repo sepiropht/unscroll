@@ -1,0 +1,911 @@
+{
+  "appName": {
+    "message": "Unscroll"
+  },
+  "tagline": {
+    "message": "Local · private"
+  },
+  "dashboard": {
+    "message": "Options"
+  },
+  "today": {
+    "message": "Today"
+  },
+  "thisSite": {
+    "message": "This site"
+  },
+  "noSite": {
+    "message": "No tracked site in this tab"
+  },
+  "topSites": {
+    "message": "Sites"
+  },
+  "emptyToday": {
+    "message": "Nothing counted yet. Time starts on the active tab while this window is in front."
+  },
+  "visits": {
+    "message": "{n} visits"
+  },
+  "visit": {
+    "message": "{n} visit"
+  },
+  "quickLimit": {
+    "message": "Quick limit"
+  },
+  "minutes": {
+    "message": "Minutes"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "limitReached": {
+    "message": "Limit reached"
+  },
+  "limitLeft": {
+    "message": "{n} min left"
+  },
+  "limitNone": {
+    "message": "No limit on this site"
+  },
+  "focus": {
+    "message": "Focus"
+  },
+  "focusHelp": {
+    "message": "A 25 min session follows a pomodoro rhythm. 50 min is a long session. Listed sites open on the block page until the timer ends."
+  },
+  "start": {
+    "message": "Start"
+  },
+  "stop": {
+    "message": "Stop"
+  },
+  "strict": {
+    "message": "Strict mode"
+  },
+  "strictHelp": {
+    "message": "No early stop."
+  },
+  "domains": {
+    "message": "Sites to block"
+  },
+  "domainsPlaceholder": {
+    "message": "youtube.com, reddit.com"
+  },
+  "custom": {
+    "message": "Custom"
+  },
+  "preset25": {
+    "message": "25 min"
+  },
+  "preset50": {
+    "message": "50 min"
+  },
+  "remaining": {
+    "message": "Time left"
+  },
+  "usesLeft": {
+    "message": "{n} five-minute pause left today"
+  },
+  "usesLeftPlural": {
+    "message": "{n} five-minute pauses left today"
+  },
+  "whitelistOn": {
+    "message": "Allow list is on"
+  },
+  "blocked": {
+    "message": "Site on pause"
+  },
+  "reasonLimit": {
+    "message": "Today’s limit is reached for {host}."
+  },
+  "reasonBlocklist": {
+    "message": "{host} is on the block list."
+  },
+  "reasonWhitelist": {
+    "message": "{host} is not on the allow list."
+  },
+  "reasonSchedule": {
+    "message": "{host} is blocked by the “{detail}” schedule."
+  },
+  "reasonFocus": {
+    "message": "Focus mode is running. {host} can wait."
+  },
+  "usedToday": {
+    "message": "Time counted today: {time}"
+  },
+  "limitValue": {
+    "message": "Limit: {n} min"
+  },
+  "snooze": {
+    "message": "+5 min"
+  },
+  "snoozeHelp": {
+    "message": "Opens the site for five minutes. The daily allowance is set in the dashboard."
+  },
+  "password": {
+    "message": "Password"
+  },
+  "unlock": {
+    "message": "Unlock"
+  },
+  "badPassword": {
+    "message": "Password refused."
+  },
+  "strictNoBypass": {
+    "message": "This session is strict. It ends on its own."
+  },
+  "noBypassLeft": {
+    "message": "No five-minute pause left today."
+  },
+  "continue": {
+    "message": "Back to the site"
+  },
+  "blockIdle": {
+    "message": "This page replaces a blocked site. Nothing is blocked right now."
+  },
+  "quoteLabel": {
+    "message": "A line for the road"
+  },
+  "overview": {
+    "message": "Home"
+  },
+  "history": {
+    "message": "History"
+  },
+  "limits": {
+    "message": "Limits"
+  },
+  "blocking": {
+    "message": "Blocking"
+  },
+  "schedules": {
+    "message": "Schedules"
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "data": {
+    "message": "Data"
+  },
+  "rangeDay": {
+    "message": "Day"
+  },
+  "rangeWeek": {
+    "message": "Week"
+  },
+  "rangeMonth": {
+    "message": "Month"
+  },
+  "thisWeek": {
+    "message": "This week"
+  },
+  "lastWeek": {
+    "message": "Previous week"
+  },
+  "trendUp": {
+    "message": "{n}% more than the previous week"
+  },
+  "trendDown": {
+    "message": "{n}% less than the previous week"
+  },
+  "trendFlat": {
+    "message": "Same time as the previous week"
+  },
+  "trendNew": {
+    "message": "No previous week to compare yet"
+  },
+  "byDay": {
+    "message": "By day"
+  },
+  "bySite": {
+    "message": "By site"
+  },
+  "other": {
+    "message": "Other"
+  },
+  "noData": {
+    "message": "No time in this range yet. The counter runs on the active tab."
+  },
+  "colDate": {
+    "message": "Day"
+  },
+  "colTime": {
+    "message": "Time"
+  },
+  "colVisits": {
+    "message": "Visits"
+  },
+  "colTop": {
+    "message": "Top site"
+  },
+  "detail": {
+    "message": "Detail"
+  },
+  "limitsHelp": {
+    "message": "Also applies to subdomains."
+  },
+  "domain": {
+    "message": "Domain"
+  },
+  "perDay": {
+    "message": "Minutes / day"
+  },
+  "byWeekday": {
+    "message": "By weekday"
+  },
+  "enabled": {
+    "message": "Enabled"
+  },
+  "addLimit": {
+    "message": "Add limit"
+  },
+  "updateLimit": {
+    "message": "Update"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "invalidDomain": {
+    "message": "Unreadable domain. Example: example.com"
+  },
+  "schedulesHelp": {
+    "message": "Blocks the listed sites in this window."
+  },
+  "scheduleName": {
+    "message": "Name"
+  },
+  "from": {
+    "message": "From"
+  },
+  "to": {
+    "message": "To"
+  },
+  "allDay": {
+    "message": "All day"
+  },
+  "days": {
+    "message": "Days"
+  },
+  "addSchedule": {
+    "message": "Add schedule"
+  },
+  "updateSchedule": {
+    "message": "Update"
+  },
+  "blockHelp": {
+    "message": "These sites stay blocked."
+  },
+  "blocklist": {
+    "message": "Block list"
+  },
+  "whitelist": {
+    "message": "Allow list"
+  },
+  "whitelistMode": {
+    "message": "Allow this list only"
+  },
+  "whitelistHelp": {
+    "message": "Sites excluded in settings stay open."
+  },
+  "addDomain": {
+    "message": "Add"
+  },
+  "focusPageHelp": {
+    "message": "Session length and sites."
+  },
+  "duration": {
+    "message": "Duration (minutes)"
+  },
+  "settingsHelp": {
+    "message": "Everything stays in this browser."
+  },
+  "language": {
+    "message": "Language"
+  },
+  "theme": {
+    "message": "Theme"
+  },
+  "themeAuto": {
+    "message": "Automatic"
+  },
+  "themeLight": {
+    "message": "Light"
+  },
+  "themeDark": {
+    "message": "Dark"
+  },
+  "idle": {
+    "message": "Idle threshold (seconds)"
+  },
+  "idleHelp": {
+    "message": "Below this, time is not counted."
+  },
+  "dayStart": {
+    "message": "Day starts at (hour)"
+  },
+  "dayStartHelp": {
+    "message": "When the statistical day starts."
+  },
+  "excluded": {
+    "message": "Excluded sites"
+  },
+  "excludedHelp": {
+    "message": "One domain per line, neither counted nor blocked."
+  },
+  "badge": {
+    "message": "Show today’s time on the icon"
+  },
+  "incognito": {
+    "message": "Also track private browsing"
+  },
+  "incognitoHelp": {
+    "message": "Allow the extension in private windows to count those tabs."
+  },
+  "snoozeCount": {
+    "message": "“+5 min” pauses per day"
+  },
+  "snoozeCountHelp": {
+    "message": "0 hides the snooze button."
+  },
+  "passwordHelp": {
+    "message": "Unlocks a site until the day ends."
+  },
+  "passwordSet": {
+    "message": "Set password"
+  },
+  "passwordClear": {
+    "message": "Remove password"
+  },
+  "passwordOn": {
+    "message": "A password is set."
+  },
+  "passwordOff": {
+    "message": "No password."
+  },
+  "passwordNew": {
+    "message": "New password"
+  },
+  "passwordAgain": {
+    "message": "Confirm"
+  },
+  "passwordShort": {
+    "message": "Four characters minimum."
+  },
+  "passwordMismatch": {
+    "message": "The two entries differ."
+  },
+  "saved": {
+    "message": "Saved."
+  },
+  "exportCsv": {
+    "message": "Export CSV"
+  },
+  "exportJson": {
+    "message": "Export JSON"
+  },
+  "importJson": {
+    "message": "Import JSON"
+  },
+  "importOk": {
+    "message": "Import finished."
+  },
+  "importFail": {
+    "message": "File refused. It needs a version 1 export."
+  },
+  "importHint": {
+    "message": "Sections in the file replace current data."
+  },
+  "reset": {
+    "message": "Reset all data"
+  },
+  "resetHelp": {
+    "message": "Clears history and settings."
+  },
+  "resetConfirm": {
+    "message": "Erase all Unscroll data on this device?"
+  },
+  "resetDone": {
+    "message": "Data cleared."
+  },
+  "privacy": {
+    "message": "Data stays in this browser."
+  },
+  "dayMon": {
+    "message": "Mon"
+  },
+  "dayTue": {
+    "message": "Tue"
+  },
+  "dayWed": {
+    "message": "Wed"
+  },
+  "dayThu": {
+    "message": "Thu"
+  },
+  "dayFri": {
+    "message": "Fri"
+  },
+  "daySat": {
+    "message": "Sat"
+  },
+  "daySun": {
+    "message": "Sun"
+  },
+  "on": {
+    "message": "Yes"
+  },
+  "off": {
+    "message": "No"
+  },
+  "site": {
+    "message": "Site"
+  },
+  "edit": {
+    "message": "Edit"
+  },
+  "emptyList": {
+    "message": "Empty list."
+  },
+  "actions": {
+    "message": "Actions"
+  },
+  "periodTotal": {
+    "message": "Period total"
+  },
+  "vsPrev": {
+    "message": "Last seven days versus the previous week"
+  },
+  "chartBars": {
+    "message": "Time by day"
+  },
+  "chartDonut": {
+    "message": "Share by site"
+  },
+  "counted": {
+    "message": "including subdomains"
+  },
+  "activeFocus": {
+    "message": "Session running"
+  },
+  "noFocus": {
+    "message": "No session. Pick a length and the sites to set aside."
+  },
+  "warnTitle": {
+    "message": "One minute left"
+  },
+  "warnBody": {
+    "message": "{domain} is about to reach its limit."
+  },
+  "focusDoneTitle": {
+    "message": "Focus finished"
+  },
+  "focusDoneBody": {
+    "message": "The {minutes} min session is over."
+  },
+  "focusEmpty": {
+    "message": "Enter at least one site."
+  },
+  "invalidMinutes": {
+    "message": "Invalid duration."
+  },
+  "snoozeExhausted": {
+    "message": "No pause left today."
+  },
+  "badPasswordCode": {
+    "message": "Password refused."
+  },
+  "focusStrictCode": {
+    "message": "A strict session does not stop early."
+  },
+  "removed": {
+    "message": "Limit removed."
+  },
+  "needDomain": {
+    "message": "Enter a domain."
+  },
+  "needDays": {
+    "message": "Pick at least one day."
+  },
+  "openSite": {
+    "message": "Open"
+  },
+  "appDescription": {
+    "message": "Screen time per site, daily limits, blocking, and focus mode. Data stays on this device."
+  },
+  "appNamePro": {
+    "message": "Unscroll Pro"
+  },
+  "appDescriptionPro": {
+    "message": "Screen time, limits, advanced reports, and encrypted sync. Nothing is sent until you turn it on."
+  },
+  "durationMin": {
+    "message": "{n} min"
+  },
+  "durationHm": {
+    "message": "{h}h {m}m"
+  },
+  "langFr": {
+    "message": "Français"
+  },
+  "langEn": {
+    "message": "English"
+  },
+  "langEs": {
+    "message": "Español"
+  },
+  "langDe": {
+    "message": "Deutsch"
+  },
+  "langPt": {
+    "message": "Português"
+  },
+  "quote0": {
+    "message": "Time you give back to your attention stays yours."
+  },
+  "quote1": {
+    "message": "A minute kept now is worth an hour later."
+  },
+  "quote2": {
+    "message": "Closing the tab makes room."
+  },
+  "quote3": {
+    "message": "You had something else in mind. It is still possible."
+  },
+  "quote4": {
+    "message": "A pause is a decision, not an absence."
+  },
+  "quote5": {
+    "message": "This site will still be here. So will your evening."
+  },
+  "quote6": {
+    "message": "Nothing urgent hides in one more scroll."
+  },
+  "quote7": {
+    "message": "Coming back later is still moving forward."
+  },
+  "quote8": {
+    "message": "Attention is not a junk drawer."
+  },
+  "quote9": {
+    "message": "You can put the screen down and keep the thread."
+  },
+  "proReports": {
+    "message": "Reports"
+  },
+  "proSync": {
+    "message": "Sync"
+  },
+  "openSync": {
+    "message": "Sync"
+  },
+  "proReportsHelp": {
+    "message": "Hours, categories, and focus sessions. The hourly detail starts with this edition. Categories apply to history already stored."
+  },
+  "proSyncHelp": {
+    "message": "Off until you turn it on. Turning it on creates an anonymous account and a 32-byte key that stays on this device. You do not type a token or a passphrase. The server stores only ciphertext. The default server is https://sync.unscroll.elimbi.com. Change the address to use your own."
+  },
+  "proSyncUrl": {
+    "message": "Server URL"
+  },
+  "proSyncToken": {
+    "message": "Token"
+  },
+  "proSyncPass": {
+    "message": "Passphrase"
+  },
+  "proSyncEnable": {
+    "message": "Enable sync"
+  },
+  "proPush": {
+    "message": "Push"
+  },
+  "proPull": {
+    "message": "Pull"
+  },
+  "proSyncNow": {
+    "message": "Sync now"
+  },
+  "proSynced": {
+    "message": "Synced."
+  },
+  "proExportReport": {
+    "message": "Export report"
+  },
+  "proCategories": {
+    "message": "Categories"
+  },
+  "proCategoriesHelp": {
+    "message": "A domain includes its subdomains. The more specific domain wins. Uncategorized sites count as Other."
+  },
+  "proHourTitle": {
+    "message": "Hours"
+  },
+  "proCategoryTitle": {
+    "message": "Last seven days"
+  },
+  "proWeekdayTitle": {
+    "message": "Average by weekday, 28 days"
+  },
+  "proFocusTitle": {
+    "message": "Focus, seven days"
+  },
+  "proSessions": {
+    "message": "Sessions"
+  },
+  "proFocusMinutes": {
+    "message": "Minutes focused"
+  },
+  "proStrictSessions": {
+    "message": "Strict sessions"
+  },
+  "proBusiest": {
+    "message": "Busiest hour: {hour}"
+  },
+  "proNoHour": {
+    "message": "No hours for this day yet. The hourly detail fills in while you browse."
+  },
+  "proNoCategory": {
+    "message": "No time across these seven days yet. Categories follow time already counted."
+  },
+  "proEmptyCategories": {
+    "message": "No domain is classified. Add one to sort time already recorded."
+  },
+  "proTokenSet": {
+    "message": "A token is already saved. Leave the field empty to keep it."
+  },
+  "proTokenMissing": {
+    "message": "Leave empty to create an account. Eight characters minimum, no spaces, for an existing token."
+  },
+  "proPassSet": {
+    "message": "A key or passphrase is already saved. Leave the field empty to keep it."
+  },
+  "proPassMissing": {
+    "message": "For an older vault. Eight characters minimum. A new account does not use this field."
+  },
+  "proEnabled": {
+    "message": "Sync is on"
+  },
+  "proDisabled": {
+    "message": "Sync is off"
+  },
+  "proLast": {
+    "message": "Last exchange"
+  },
+  "proNever": {
+    "message": "never"
+  },
+  "proPushed": {
+    "message": "Copy sent."
+  },
+  "proPulled": {
+    "message": "Copy received."
+  },
+  "proInvalidDomain": {
+    "message": "Unreadable domain."
+  },
+  "proPrevDay": {
+    "message": "Previous day"
+  },
+  "proNextDay": {
+    "message": "Next day"
+  },
+  "proProductive": {
+    "message": "Productive"
+  },
+  "proSocial": {
+    "message": "Social"
+  },
+  "proEntertainment": {
+    "message": "Entertainment"
+  },
+  "proOther": {
+    "message": "Other"
+  },
+  "proErrConfig": {
+    "message": "An https or http URL. Leave the token empty to create an account, or enter a token and a key or passphrase that is already saved."
+  },
+  "proErrDisabled": {
+    "message": "Turn sync on and save it before exchanging."
+  },
+  "proErrEmpty": {
+    "message": "The server has no copy yet."
+  },
+  "proErrAuth": {
+    "message": "The server refused the token."
+  },
+  "proErrConflict": {
+    "message": "Both copies changed. Push to keep this device, or pull to keep the server."
+  },
+  "proErrNetwork": {
+    "message": "The server did not respond."
+  },
+  "proErrHttp": {
+    "message": "The server answered in an unexpected way."
+  },
+  "proErrPass": {
+    "message": "The key or passphrase cannot decrypt the server copy."
+  },
+  "proErrDomain": {
+    "message": "Unreadable domain."
+  },
+  "proErrUnknown": {
+    "message": "Exchange failed."
+  },
+  "navLabel": {
+    "message": "Sections"
+  },
+  "skipToContent": {
+    "message": "Skip to content"
+  },
+  "storageError": {
+    "message": "Local storage rejected the write. Try again. Nothing is sent."
+  },
+  "storageReadError": {
+    "message": "Local storage could not be read. This screen starts from the default settings until the next try."
+  },
+  "failed": {
+    "message": "The extension did not answer. Try again."
+  },
+  "emptyLimits": {
+    "message": "No limit yet. Add a domain and the site blocks when today’s allowance runs out."
+  },
+  "emptyBlock": {
+    "message": "No site is always blocked. Add a domain to cut it off right away."
+  },
+  "emptyAllow": {
+    "message": "No site is allowed. In allow-list mode, only what you add here stays open."
+  },
+  "emptySchedules": {
+    "message": "No schedule yet. Pick days and a clock range, and the listed sites block during those hours."
+  },
+  "emptyHistory": {
+    "message": "No day recorded yet. History appears after the first counted minute."
+  },
+  "meterLabel": {
+    "message": "Share of the allowance already used"
+  },
+  "deleteNamed": {
+    "message": "Delete {name}"
+  },
+  "editNamed": {
+    "message": "Edit {name}"
+  },
+  "toggleNamed": {
+    "message": "Turn {name} on or off"
+  },
+  "showDay": {
+    "message": "Show {name}"
+  },
+  "historyCaption": {
+    "message": "Recorded days"
+  },
+  "detailCaption": {
+    "message": "Sites for the selected day"
+  },
+  "passwordField": {
+    "message": "Unlock password"
+  },
+  "blockIdleTitle": {
+    "message": "Nothing to block"
+  },
+  "turnOn": {
+    "message": "Turn on"
+  },
+  "turnOff": {
+    "message": "Turn off"
+  },
+  "passwordLong": {
+    "message": "200 characters at most."
+  },
+  "needName": {
+    "message": "Enter a name."
+  },
+  "proSyncHttps": {
+    "message": "HTTPS checks the certificate. The default server is https://sync.unscroll.elimbi.com. On this browser, http://127.0.0.1 is fine."
+  },
+  "proSecretReady": {
+    "message": "A key or passphrase is already saved on this device."
+  },
+  "proAdvanced": {
+    "message": "Advanced"
+  },
+  "proAdvancedHelp": {
+    "message": "For an existing vault, or a passphrase you already use. Leave blank to keep what is saved. A new account does not use these fields."
+  },
+  "proClearToken": {
+    "message": "Clear the saved token"
+  },
+  "proClearSecret": {
+    "message": "Clear the saved key or passphrase"
+  },
+  "proProvisioned": {
+    "message": "Account created. Sync started. The key stays on this device."
+  },
+  "proAccountSaved": {
+    "message": "The account is saved on this device. Sync did not finish."
+  },
+  "proPair": {
+    "message": "Pair a device"
+  },
+  "proHideQr": {
+    "message": "Hide QR code"
+  },
+  "proPairWarning": {
+    "message": "This QR code and this link grant full vault access (address, token and encryption key). Treat them like a password."
+  },
+  "proQrAlt": {
+    "message": "Pairing QR code"
+  },
+  "proPairLink": {
+    "message": "Pairing link"
+  },
+  "proCopyLink": {
+    "message": "Copy link"
+  },
+  "proCopied": {
+    "message": "Link copied."
+  },
+  "proCopyFailed": {
+    "message": "Copy failed. Select the link."
+  },
+  "proQrTooBig": {
+    "message": "The QR code is too long. Copy the link."
+  },
+  "proPaste": {
+    "message": "Paste a link"
+  },
+  "proPasteHelp": {
+    "message": "The link saves the account and starts sync."
+  },
+  "proPasteAction": {
+    "message": "Pair"
+  },
+  "proPairNeedSave": {
+    "message": "Turn sync on first."
+  },
+  "proPaired": {
+    "message": "Device paired. Sync started."
+  },
+  "proPairInvalid": {
+    "message": "This pairing link cannot be read."
+  },
+  "vsYesterdayDown": {
+    "message": "−{n} % vs yesterday"
+  },
+  "vsYesterdayUp": {
+    "message": "+{n} % vs yesterday"
+  },
+  "vsYesterdaySame": {
+    "message": "0 % vs yesterday"
+  },
+  "vsYesterdayNone": {
+    "message": "vs yesterday"
+  },
+  "weekAvg": {
+    "message": "7-day avg"
+  },
+  "syncOn": {
+    "message": "On"
+  },
+  "syncOff": {
+    "message": "Off"
+  },
+  "openOptions": {
+    "message": "Options"
+  },
+  "more": {
+    "message": "More"
+  },
+  "plusReports": {
+    "message": "Report"
+  },
+  "startQuickFocus": {
+    "message": "Start"
+  },
+  "needSiteForFocus": {
+    "message": "Open a site, or set the session in Options."
+  }
+}

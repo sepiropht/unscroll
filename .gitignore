@@ -1,0 +1,37 @@
+# Build output
+build/
+out/
+dist/
+release/
+.gradle/
+.kotlin/
+.cxx/
+.externalNativeBuild/
+captures/
+node_modules/
+.vite/
+server/bin/
+server/data/
+*.zip
+
+# Local and editor files
+local.properties
+.idea/
+*.iml
+.DS_Store
+
+# Secrets: never commit
+.env
+.env.*
+*.env
+auth.json
+*.jks
+*.keystore
+*.pem
+*.p12
+*.key
+google-services.json
+*.db
+
+# Logs
+*.log

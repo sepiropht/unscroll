@@ -1,0 +1,49 @@
+{
+  "name": "unscroll-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Unscroll for desktop: local-first screen time tracking and limits",
+  "main": "./out/main/index.js",
+  "author": "Unscroll contributors",
+  "license": "AGPL-3.0-only",
+  "desktopName": "unscroll.desktop",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "icons": "node scripts/generate-icon.mjs",
+    "dev": "electron-vite dev",
+    "test": "vitest run",
+    "build": "npm run test && rm -rf out && electron-vite build && node scripts/assert-edition.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "postinstall": "electron-builder install-app-deps",
+    "dist": "npm run icons && npm run build && electron-builder --publish never",
+    "dist:linux": "npm run icons && npm run build && electron-builder --linux AppImage --publish never",
+    "dist:linux:deb": "npm run icons && npm run build && electron-builder --linux deb --publish never",
+    "dist:win": "npm run icons && npm run build && electron-builder --win nsis portable --publish never",
+    "dist:mac": "npm run icons && npm run build && electron-builder --mac dmg zip --publish never"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "get-windows": "^10.0.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "recharts": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.19.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "electron": "^45.2.2",
+    "electron-builder": "^26.18.0",
+    "electron-vite": "^6.0.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.0.0",
+    "vitest": "^5.1.0"
+  },
+  "homepage": "https://github.com/sepiropht/unscroll"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "unscroll-extension",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Unscroll browser extension: screen time per site, limits, and focus. Optional end-to-end encrypted sync.",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "icons": "node scripts/generate-icons.mjs",
+    "check": "node scripts/check-locales.mjs && node --experimental-strip-types scripts/logic-check.ts",
+    "test": "vitest run",
+    "build": "npm run build:raw",
+    "build:oss": "npm run build:raw",
+    "build:pro": "npm run build:raw",
+    "build:firefox": "npm run build:raw",
+    "lint:firefox": "web-ext lint --source-dir dist",
+    "build:raw": "npm run icons && npm run check && tsc --noEmit && vite build && vite build --config vite.background.config.ts && node scripts/assert-edition.mjs",
+    "zip": "node scripts/zip-dist.mjs",
+    "zip:oss": "npm run zip",
+    "zip:pro": "npm run zip"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.304",
+    "@types/qrcode": "^1.5.6",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.7",
+    "vitest": "^5.1.0",
+    "web-ext": "^10.8.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  },
+  "homepage": "https://github.com/sepiropht/unscroll"
+}

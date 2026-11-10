@@ -1,0 +1,6 @@
+node_modules/
+dist/
+*.zip
+*.log
+grok-*.log
+chain.log

@@ -1,0 +1,64 @@
+appId: app.unscroll.desktop
+productName: Unscroll
+executableName: unscroll
+copyright: Copyright © 2026 Unscroll contributors. AGPL-3.0-only.
+# Null disables the GitHub provider electron-builder would infer from the remote.
+# The app has no updater and does not look for a release feed.
+publish: null
+asar: true
+npmRebuild: false
+# No update feed. Auto-update stays off; pass --publish never from the scripts.
+directories:
+  output: release
+  buildResources: resources
+files:
+  - out/**/*
+  - package.json
+  - LICENSE
+asarUnpack:
+  - "**/node_modules/better-sqlite3/**"
+  - "**/node_modules/get-windows/**"
+extraResources:
+  - from: resources/icon.png
+    to: icon.png
+  - from: resources/tray.png
+    to: tray.png
+linux:
+  target:
+    - AppImage
+    - deb
+  syncDesktopName: true
+  category: Utility
+  icon: resources/icons
+  synopsis: Local-first screen time tracking
+  description: Tracks time spent in each app, sets daily limits, and keeps everything on your machine.
+  artifactName: unscroll-${version}-${arch}.${ext}
+  maintainer: Unscroll contributors
+win:
+  target:
+    - nsis
+    - portable
+  icon: resources/icon.ico
+# NSIS and portable are both .exe, so each target keeps its own artifact name.
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  differentialPackage: false
+  artifactName: unscroll-${version}-${arch}-setup.${ext}
+portable:
+  requestExecutionLevel: user
+  artifactName: unscroll-${version}-${arch}-portable.${ext}
+mac:
+  target:
+    - dmg
+    - zip
+  icon: resources/icon.icns
+  category: public.app-category.utilities
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: resources/entitlements.mac.plist
+  entitlementsInherit: resources/entitlements.mac.plist
+  artifactName: unscroll-${version}-${arch}.${ext}
+dmg:
+  artifactName: unscroll-${version}-${arch}.${ext}
