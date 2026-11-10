@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>Unscroll</title>
+  <rect width="32" height="32" rx="8" fill="#0c1016"/>
+  <circle cx="16" cy="16" r="8.25" fill="none" stroke="#314056" stroke-width="3"/>
+  <circle cx="16" cy="16" r="8.25" fill="none" stroke="#e39a56" stroke-width="3" stroke-linecap="round" stroke-dasharray="34 52" transform="rotate(-80 16 16)"/>
+</svg>
