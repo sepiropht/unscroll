@@ -20,11 +20,11 @@ The debug APK is `app/build/outputs/apk/debug/app-debug.apk`.
 
 Each permission is asked only when you use the feature that needs it:
 
-- **Usage access**: counts screen time per app.
-- **Accessibility service** (optional): recognizes the foreground app so limits apply right away.
-- **Display over other apps**: shows the block screen.
+- **Usage access**: counts screen time per app, and detects the foreground app so a limit can be applied. Asked at first launch.
+- **Display over other apps**: shows the pause screen over an app or site that has reached its limit. Asked when you first create a limit.
 - **Notifications**: reminders, summaries, and focus status.
-- **Camera** (optional): scans a pairing QR code. Decoding runs on the device (ZXing).
+- **Accessibility service** (optional, off by default): reads only the address bar of known browsers, to measure time per website. Asked when you turn on website tracking, after a prominent disclosure.
+- Pairing uses a shown QR code and a pasted link. There is no camera permission.
 
 ## Sync
 
@@ -32,7 +32,7 @@ Open **More → Sync**, turn it on, then **Pair a device** to show a QR code, or
 
 ## Release build
 
-`versionCode` is 1 and `versionName` is 1.0.0. The target SDK is 36, which meets the Google Play requirement for new apps as of 31 August 2026.
+`versionCode` is 2 and `versionName` is 1.0.1. The target SDK is 36, which meets the Google Play requirement for new apps as of 31 August 2026.
 
 A release build is minified with R8. Signing is optional, so a contributor can still run `./gradlew :app:assembleRelease` without a keystore; the bundle or APK is then left unsigned.
 

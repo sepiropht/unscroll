@@ -10,7 +10,7 @@ import app.unscroll.data.guard.GuardRepository
 import app.unscroll.data.guard.parseCsv
 import app.unscroll.prefs.AppPrefs
 import app.unscroll.service.FocusRoutineScheduler
-import app.unscroll.service.FocusService
+import app.unscroll.service.FocusNotifications
 import app.unscroll.service.FocusSessionKeeper
 import app.unscroll.service.FocusSessions
 import app.unscroll.service.FocusTileService
@@ -119,9 +119,8 @@ class FocusViewModel(app: Application) : AndroidViewModel(app) {
     fun stop() {
         val app = getApplication<Application>()
         prefs.clearFocus()
-        runCatching {
-            app.startService(Intent(app, FocusService::class.java).setAction(FocusService.ACTION_STOP_MANUAL))
-        }
+        FocusNotifications.haltIfRunning(app)
+        FocusNotifications.refresh(app)
         FocusTileService.requestListening(app)
         refresh()
     }

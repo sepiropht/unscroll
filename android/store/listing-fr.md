@@ -21,12 +21,11 @@ CE QUE VOUS POUVEZ FAIRE
 • Exporter et importer votre sauvegarde au format JSON
 
 AUTORISATIONS, DEMANDÉES SEULEMENT AU BESOIN
-• L'accès aux données d'usage compte le temps par application
-• Le service d'accessibilité, si vous l'activez, reconnaît l'application au premier plan pour appliquer une limite, et lit la barre d'adresse des navigateurs courants afin d'estimer le temps par site. Il ne lit pas vos messages, vos mots de passe, ni ce que vous tapez. Une explication complète et votre consentement sont affichés dans l'application avant l'ouverture des réglages Android
-• L'affichage par-dessus les autres applications montre l'écran de pause au-dessus d'une application qui a atteint sa limite
+• L'accès aux données d'usage compte le temps par application et sert à savoir quelle application est au premier plan, afin d'afficher l'écran de pause
+• L'affichage par-dessus les autres applications montre l'écran de pause au-dessus d'une application ou d'un site qui a atteint sa limite
+• Le service d'accessibilité est facultatif et désactivé par défaut. Si vous activez le suivi des sites, il lit uniquement la barre d'adresse des navigateurs connus afin d'estimer le temps par site. Il ne lit pas le contenu des pages, vos messages, vos mots de passe, ni ce que vous tapez. Une explication complète et votre consentement sont affichés dans l'application avant l'ouverture des réglages Android
 • Les notifications préviennent avant une limite, pendant une session de concentration, ou pour un rappel
-• Le compteur de notifications, si vous l'activez, ne conserve que le nombre — pas le titre, pas le texte
-• L'appareil photo sert uniquement à scanner un QR de jumelage. Le décodage se fait sur l'appareil
+• Le jumelage se fait avec un QR affiché ou un lien collé. L'application n'utilise pas l'appareil photo
 
 SYNC FACULTATIVE
 La sync est éteinte tant que vous ne l'allumez pas. Une fois allumée, le téléphone chiffre la sauvegarde avec une clé qui reste sur vos appareils (AES-GCM) et n'envoie que du chiffré au serveur que vous choisissez.

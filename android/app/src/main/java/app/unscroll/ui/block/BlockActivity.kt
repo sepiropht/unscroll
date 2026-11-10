@@ -11,7 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import app.unscroll.data.guard.BlockReason
 import app.unscroll.data.guard.SubjectKind
-import app.unscroll.service.ScreenTimeAccessibilityService
+import app.unscroll.service.GuardRuntime
 import app.unscroll.ui.theme.UnscrollTheme
 
 class BlockActivity : ComponentActivity() {
@@ -33,13 +33,13 @@ class BlockActivity : ComponentActivity() {
                     BlockScreen(
                         state = ui,
                         onClose = {
-                            if (!ScreenTimeAccessibilityService.requestClose()) {
-                                ScreenTimeAccessibilityService.goHomeFallback(this@BlockActivity)
+                            if (!GuardRuntime.requestClose()) {
+                                GuardRuntime.goHomeFallback(this@BlockActivity)
                                 finish()
                             }
                         },
                         onExtra = {
-                            ScreenTimeAccessibilityService.requestExtra(ui.targetKey, ui.reason.name)
+                            GuardRuntime.requestExtra(ui.targetKey, ui.reason.name)
                         },
                     )
                 }

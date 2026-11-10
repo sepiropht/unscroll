@@ -1,34 +1,31 @@
 package app.unscroll.permissions
 
 import android.app.AppOpsManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
 import androidx.core.content.ContextCompat
-import app.unscroll.service.NotificationCounterService
 import app.unscroll.service.ScreenTimeAccessibilityService
-import android.content.ComponentName
 
 data class PermissionSnapshot(
     val usage: Boolean,
-    val accessibility: Boolean,
     val overlay: Boolean,
     val notifications: Boolean,
     val notificationsNeedRequest: Boolean,
     val batteryIgnored: Boolean,
-    val notificationListener: Boolean,
+    val accessibility: Boolean,
 ) {
     companion object {
         fun capture(context: Context) = PermissionSnapshot(
             usage = PermissionChecks.hasUsageAccess(context),
-            accessibility = PermissionChecks.isAccessibilityEnabled(context),
             overlay = PermissionChecks.canOverlay(context),
             notifications = PermissionChecks.hasNotifications(context),
             notificationsNeedRequest = Build.VERSION.SDK_INT >= 33,
             batteryIgnored = PermissionChecks.ignoresBatteryOptimizations(context),
-            notificationListener = PermissionChecks.hasNotificationListener(context),
+            accessibility = PermissionChecks.isAccessibilityEnabled(context),
         )
     }
 }
@@ -88,16 +85,5 @@ object PermissionChecks {
     fun ignoresBatteryOptimizations(context: Context): Boolean {
         val power = context.getSystemService(PowerManager::class.java) ?: return false
         return power.isIgnoringBatteryOptimizations(context.packageName)
-    }
-
-    fun hasNotificationListener(context: Context): Boolean {
-        val expected = ComponentName(context, NotificationCounterService::class.java)
-        val raw = Settings.Secure.getString(
-            context.contentResolver,
-            "enabled_notification_listeners",
-        ) ?: return false
-        return raw.split(':').any { flat ->
-            ComponentName.unflattenFromString(flat) == expected
-        }
     }
 }

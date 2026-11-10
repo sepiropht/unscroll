@@ -166,7 +166,7 @@ class AppDetailViewModel(
             day.sessions.filter { it.packageName == packageName }
         }
         val durations = windowSessions.map { (it.endMillis - it.startMillis).coerceAtLeast(0L) }
-        val listener = PermissionChecks.hasNotificationListener(app)
+        val listener = false
         val notifications = if (packageName.isBlank()) {
             0
         } else {

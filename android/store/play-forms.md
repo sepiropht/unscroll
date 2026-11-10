@@ -1,6 +1,6 @@
 # Play Console forms — Unscroll (`app.unscroll`)
 
-Fill these in the console. The wording below is a draft you can paste. It matches the app as of version 1.0.0 (versionCode 1).
+Fill these in the console. The wording below is a draft you can paste. It matches the app as of version 1.0.1 (versionCode 2).
 
 ## Category and audience
 
@@ -61,75 +61,69 @@ A conservative, accurate way to fill the form:
 
 ## App access / sensitive permissions — justification drafts
 
-Paste into the corresponding Play Console declaration. Film a short demo video when the form asks for one (accessibility, and sometimes usage access or notification access).
+Paste into the corresponding Play Console declaration. Film a short demo video when the form asks for one (accessibility, and sometimes usage access).
 
 ### Usage access (`PACKAGE_USAGE_STATS`)
 
 **Required declaration:** Yes (Restricted/sensitive app permission).
 
-Unscroll is a screen-time app. Usage access is the system source for time spent in each app. The app reads usage events on the device to show daily, weekly, and monthly totals, and to apply daily limits the person chose. The data stays on the device unless the person turns on optional end-to-end encrypted sync. It is not used for advertising and is not sent to the developer.
+Unscroll is a screen-time app. Usage access is the system source for time spent in each app, and for knowing which app is in the foreground so a daily limit or schedule can show the pause screen. The app reads usage events on the device to show daily, weekly, and monthly totals, and to apply limits the person chose. The data stays on the device unless the person turns on optional end-to-end encrypted sync. It is not used for advertising and is not sent to the developer.
 
 ### Accessibility service
 
 **Required declaration:** Yes. Provide the prominent disclosure text, a short demo video, and a description of why the service is used.
 
-**Do not** check that the app is an accessibility tool for people with disabilities. `android:isAccessibilityTool` is left unset (false). Unscroll is a screen-time and app-blocking app, not an assistive technology.
+**Purpose of the declaration:** website time tracking only. The service is not used to detect the foreground app, to apply app limits, to perform gestures, or to send the Home action. App blocking uses usage access and the display-over-other-apps overlay.
+
+**Do not** check that the app is an accessibility tool for people with disabilities. `android:isAccessibilityTool` is left unset (false). Unscroll is a screen-time app, not an assistive technology.
+
+The service is optional, off by default, and requested only when the person turns on website tracking (or saves a site limit). The accessibility config is limited to known browser packages and to window state/content events. `canPerformGestures` is false. `canRetrieveWindowContent` is true only so the address bar can be read.
 
 **In-app prominent disclosure (already implemented, English default):**
 
-Title: Before enabling accessibility
+Title: Before enabling website tracking
 
-Body: Unscroll asks you to enable an accessibility service.
+Body: Unscroll asks you to enable an accessibility service to track time on websites.
 
-It recognizes the foreground app so your limits can be applied, and reads the address bar of common browsers to estimate time per site.
+It reads only the address bar of known browsers (Chrome, Firefox, Brave, Edge, Samsung Internet, Opera, and their variants). It does not read page content, messages, passwords, or what you type. It does not control the screen or detect which other apps you use.
 
-Split screen and a floating window do not bypass a limit. If the app stays visible beside another, the pause screen covers both. A floating window is opened full screen, with a tap, so the limit applies.
-
-It does not read your messages, passwords, or what you type. Nothing is sent off the device.
-
-You can turn it off at any time in Android settings.
+Nothing is sent off the device. You can turn it off at any time in Android settings.
 
 Consent checkbox: I have read this and agree to enable the service.
 
-The app opens Android accessibility settings only after that checkbox is ticked, including when a limit is saved and the service is not yet on.
+The app opens Android accessibility settings only after that checkbox is ticked.
 
 **Play form justification:**
 
-The accessibility service is optional and off until the person enables it. It is used to (1) recognize the foreground app so a daily limit or schedule can be applied as soon as that app is visible, including in split screen; (2) read only the address bar of known browsers so time per site can be estimated and a site limit can be applied; (3) perform a single tap gesture on a floating window so it can be opened full screen and the limit still applies; and (4) send the Home action when the person leaves a blocked app. It does not read messages, passwords, or typed input. It does not scrape the web content of pages. Nothing the service sees is sent off the device unless the person has turned on optional end-to-end encrypted sync, which sends only ciphertext. The person can disable the service in Android settings at any time.
+The accessibility service is used only for website time tracking. It is optional and off by default. It is requested only when the person turns on website tracking, after a prominent in-app disclosure and explicit consent. The service reads only the address bar of known browsers so time per site can be estimated and a site limit the person chose can be applied. It does not detect the foreground app (that uses usage access), does not perform gestures, and does not send the Home action. It does not read messages, passwords, typed input, or the content of web pages. Its configuration is restricted to supported browser packages and to the event types needed to read the address bar. Nothing the service sees is sent off the device unless the person has turned on optional end-to-end encrypted sync, which sends only ciphertext. The person can disable the service in Android settings at any time.
 
-**Demo video should show:** the in-app disclosure and consent checkbox, enabling the service, a limit being applied when a sample app is opened, and (optionally) the address bar being used only to show a site name or to block it.
+**Demo video should show:** turning on website tracking, the in-app disclosure and consent checkbox, enabling the service, then time being recorded for a site in a supported browser (or a site limit being applied). Do not present the service as required for ordinary app blocking.
 
 ### Query all packages (`QUERY_ALL_PACKAGES`)
 
-**Required declaration:** Yes.
-
-Unscroll needs to resolve the label and icon of every package that appears in usage events, and to know which installed packages are system apps so they can be excluded by default. A `<queries>` element for `MAIN`/`LAUNCHER` is also declared and covers launchable apps, but it is not enough: usage events include non-launcher packages (system services, input methods, work apps). Without `QUERY_ALL_PACKAGES`, those entries would appear as raw package names and default exclusions would be incomplete. The app does not inventory other apps for advertising or for a store. The list never leaves the device unless the person turns on optional end-to-end encrypted sync.
+**Not declared.** The app does not request this permission. A `<queries>` element for `MAIN`/`LAUNCHER` is used so launchable apps can be listed with their labels and icons. Packages that appear in usage events but have no launcher may be shown under their package name. The app does not inventory other apps for advertising or for a store.
 
 ### Display over other apps (`SYSTEM_ALERT_WINDOW`)
 
 **Required declaration:** often yes, when the permission is used.
 
-The overlay is used only to show the pause (block) screen over an app or site that has reached a limit the person set, including in split screen. It is not used to draw on top of other apps for any other purpose.
+The overlay is used only to show the pause (block) screen over an app or site that has reached a limit the person set. It is asked when the person first creates a limit. It is not used to draw on top of other apps for any other purpose.
 
 ### Notification access (NotificationListenerService)
 
-**Required declaration:** Yes, if the service is declared (it is).
-
-The notification listener is optional. When the person enables it, Unscroll stores only a count of notifications per app. It does not read or store the title, the text, or the content of notifications. The count stays on the device unless the person turns on optional end-to-end encrypted sync.
+**Not declared.** The app does not include a notification listener and does not count notification contents or titles.
 
 ### Foreground service special use (`FOREGROUND_SERVICE_SPECIAL_USE`)
 
-**Required declaration:** Yes (special-use foreground service).
-
-The service runs only during a focus session the person started. It keeps a countdown timer and an ongoing notification for that session. Manifest property: "Countdown timer for a focus session the person started." It is not used to track the person in the background outside that session.
+**Not declared.** Focus sessions use an ordinary notification and the same usage-access guard that applies limits. There is no special-use foreground service.
 
 ### Camera
 
-No restricted-permission form. Declare in Data safety that the camera is used on the device to scan a pairing QR code and that images are not collected or sent. The feature is optional (`android.hardware.camera` required=false).
+**Not declared.** Pairing uses a QR code shown on the device and a pasted link. The app does not request the camera permission.
 
 ### Notifications, boot, battery exemption, internet, wake lock
 
-No dedicated sensitive-permission forms. `WAKE_LOCK` and `ACCESS_NETWORK_STATE` are merged from AndroidX libraries. `RECEIVE_BOOT_COMPLETED` reschedules focus routines after a reboot. `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` is asked only so tracking and reminders can keep running; the person can refuse.
+No dedicated sensitive-permission forms. `WAKE_LOCK` and `ACCESS_NETWORK_STATE` are merged from WorkManager (widget refresh and usage persistence). `RECEIVE_BOOT_COMPLETED` reschedules focus routines and the limit guard after a reboot. `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` is asked only so tracking and reminders can keep running; the person can refuse. `FOREGROUND_SERVICE`, merged by WorkManager, is removed: the app does not start a foreground service.
 
 ## Privacy policy URL
 
@@ -139,4 +133,4 @@ Also add this URL in App content > Privacy policy, and in the Data safety sectio
 
 ## App access notes (for reviewers)
 
-Unscroll is a local-first screen-time app. To review blocking and site time, enable Usage access, then (after the in-app disclosure) the accessibility service, and Display over other apps. To review notification counts, enable the notification listener. To review sync, you can point the app at your own server or at the default host; no account email is required. There is no demo login. The Play upload is signed with the upload key; Play App Signing should be enabled so Google holds the app signing key.
+Unscroll is a local-first screen-time app. To review app blocking, enable Usage access (asked at first launch) and Display over other apps (asked when the first limit is created). To review website time tracking, turn on website tracking, accept the in-app disclosure, and enable the accessibility service. To review sync, you can point the app at your own server or at the default host; no account email is required. There is no demo login. The Play upload is signed with the upload key; Play App Signing should be enabled so Google holds the app signing key.

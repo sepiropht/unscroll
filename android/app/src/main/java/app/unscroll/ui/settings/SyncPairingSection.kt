@@ -1,13 +1,9 @@
 package app.unscroll.ui.settings
 
-import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,19 +21,16 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import app.unscroll.R
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
-import com.journeyapps.barcodescanner.ScanContract
-import com.journeyapps.barcodescanner.ScanOptions
 
 /**
- * QR dessiné et lu sur l'appareil (ZXing). Aucune image n'est envoyée, aucun compte Google.
- * Le lien contient le jeton et la clé : il n'est pas journalisé.
+ * QR dessiné sur l'appareil (ZXing). Aucune image n'est envoyée, aucun compte Google.
+ * Le jumelage se fait en montrant le code ou en collant le lien. Pas d'appareil photo.
  */
 @Composable
 fun SyncPairingSection(
@@ -48,35 +41,15 @@ fun SyncPairingSection(
     onToggle: () -> Unit,
     onPasteChange: (String) -> Unit,
     onPaste: () -> Unit,
-    onScanned: (String) -> Unit,
-    onDenied: () -> Unit,
     onCopied: () -> Unit,
     onCopyFailed: () -> Unit,
 ) {
     val context = LocalContext.current
-    val scan = rememberLauncherForActivityResult(ScanContract()) { result ->
-        val text = result.contents
-        if (!text.isNullOrEmpty()) onScanned(text)
-    }
-    val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) scan.launch(scanOptions(context)) else onDenied()
-    }
     Text(
         stringResource(R.string.privacy_sync_pair_warning),
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.error,
     )
-    OutlinedButton(
-        onClick = {
-            val granted = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
-                PackageManager.PERMISSION_GRANTED
-            if (granted) scan.launch(scanOptions(context)) else permission.launch(Manifest.permission.CAMERA)
-        },
-        enabled = !busy,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Text(stringResource(R.string.privacy_sync_scan))
-    }
     OutlinedButton(onClick = onToggle, enabled = !busy, modifier = Modifier.fillMaxWidth()) {
         Text(
             stringResource(
@@ -136,13 +109,6 @@ fun SyncPairingSection(
     }
 }
 
-private fun scanOptions(context: Context): ScanOptions = ScanOptions().apply {
-    setDesiredBarcodeFormats(ScanOptions.QR_CODE)
-    setPrompt(context.getString(R.string.privacy_sync_scan))
-    setBeepEnabled(false)
-    setOrientationLocked(false)
-    setBarcodeImageEnabled(false)
-}
 
 private fun copyLink(context: Context, link: String, onCopied: () -> Unit, onCopyFailed: () -> Unit) {
     val clipboard = context.getSystemService(ClipboardManager::class.java)

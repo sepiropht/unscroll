@@ -8,22 +8,18 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+    <!-- WorkManager merges this; the app never starts a foreground service. -->
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE"
+        tools:node="remove" />
+    <!-- Kept as a removal in case a transitive manifest reintroduces it. -->
+    <uses-permission
+        android:name="android.permission.CAMERA"
+        tools:node="remove" />
 
-
-    <!-- Launchable apps stay visible even if QUERY_ALL_PACKAGES is not granted.
-         Labels for non-launcher packages that appear in usage stats still need it. -->
     <queries>
         <intent>
             <action android:name="android.intent.action.MAIN" />
@@ -64,16 +60,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".service.NotificationCounterService"
-            android:exported="true"
-            android:label="@string/notif_listener_label"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
-
         <activity
             android:name=".ui.block.BlockActivity"
             android:excludeFromRecents="true"
@@ -97,9 +83,33 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".service.GuardService"
+            android:exported="false" />
+
         <receiver
             android:name=".service.ReminderReceiver"
             android:exported="false" />
+
+        <receiver
+            android:name=".service.GuardWatchdogReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="app.unscroll.action.GUARD_WATCHDOG" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".service.FocusActionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="app.unscroll.FOCUS_STOP" />
+                <action android:name="app.unscroll.FOCUS_STOP_MANUAL" />
+                <action android:name="app.unscroll.FOCUS_SKIP_ROUTINE" />
+                <action android:name="app.unscroll.FOCUS_ALIGN" />
+                <action android:name="app.unscroll.FOCUS_ENDED" />
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name=".widget.TodayTimeReceiver"
@@ -125,27 +135,6 @@
                 android:resource="@xml/widget_today_medium" />
         </receiver>
 
-        <receiver
-            android:name=".service.FocusRoutineReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".service.FocusService"
-            android:exported="false"
-            android:foregroundServiceType="specialUse">
-            <property
-                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="Countdown timer for a focus session the person started." />
-        </service>
-
         <service
             android:name=".service.ScreenTimeAccessibilityService"
             android:exported="false"
@@ -157,5 +146,20 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
         </service>
+
+        <receiver
+            android:name=".service.FocusRoutineReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            tools:node="remove" />
     </application>
 </manifest>

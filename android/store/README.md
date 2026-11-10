@@ -1,6 +1,6 @@
 # Play Store pack for Unscroll Android
 
-This folder is ready to paste into Google Play Console for `app.unscroll` version 1.0.0 (versionCode 1).
+This folder is ready to paste into Google Play Console for `app.unscroll` version 1.0.1 (versionCode 2).
 
 - `listing-en.md` / `listing-fr.md` — title, short description, full description
 - `play-forms.md` — Data safety, content rating, ads, audience, and permission justifications

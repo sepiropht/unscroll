@@ -21,12 +21,11 @@ WHAT YOU CAN DO
 • Export and import your own backup as a JSON file
 
 PERMISSIONS, ASKED ONLY WHEN NEEDED
-• Usage access counts screen time per app
-• The accessibility service, if you enable it, recognizes the app in the foreground so a limit can be applied, and reads the address bar of common browsers to estimate time per site. It does not read your messages, passwords, or what you type. A full explanation and your consent are shown in the app before Android settings are opened
-• Display over other apps shows the pause screen over an app that has reached its limit
+• Usage access counts screen time per app and is used to know which app is in front, so a limit can show the pause screen
+• Display over other apps shows the pause screen over an app or site that has reached its limit
+• The accessibility service is optional and off by default. If you turn on website tracking, it reads only the address bar of known browsers to estimate time per site. It does not read page content, messages, passwords, or what you type. A full explanation and your consent are shown in the app before Android settings are opened
 • Notifications warn you before a limit, during a focus session, or for a reminder
-• The notification counter, if you enable it, stores only the count — not the title or the text
-• The camera is used only to scan a pairing QR code. Decoding runs on the device
+• Pairing uses a shown QR code or a pasted link. The app does not use the camera
 
 SYNC, OPTIONAL
 Sync is off until you turn it on. When it is on, the phone encrypts the backup with a key that stays on your devices (AES-GCM) and sends only ciphertext to the server you choose.

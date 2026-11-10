@@ -51,7 +51,6 @@ import app.unscroll.R
 import app.unscroll.permissions.PermissionSnapshot
 import app.unscroll.permissions.openAccessibilitySettings
 import app.unscroll.permissions.openBatterySettings
-import app.unscroll.permissions.openNotificationListenerSettings
 import app.unscroll.permissions.openOverlaySettings
 import app.unscroll.permissions.openUsageAccessSettings
 
@@ -64,7 +63,6 @@ fun PermissionStatusScreen(
 ) {
     val context = LocalContext.current
     var snapshot by remember { mutableStateOf(PermissionSnapshot.capture(context)) }
-    var showDisclosure by remember { mutableStateOf(false) }
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -75,21 +73,13 @@ fun PermissionStatusScreen(
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
+    var showA11yDisclosure by remember { mutableStateOf(false) }
     val notificationLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) {
         snapshot = PermissionSnapshot.capture(context)
     }
 
-    if (showDisclosure) {
-        AccessibilityDisclosure(
-            onDismiss = { showDisclosure = false },
-            onConfirm = {
-                showDisclosure = false
-                context.openAccessibilitySettings()
-            },
-        )
-    }
 
     Scaffold(
         topBar = {
@@ -155,17 +145,6 @@ fun PermissionStatusScreen(
                 onAction = { context.openUsageAccessSettings() },
             )
             PermissionCard(
-                title = stringResource(R.string.perm_a11y),
-                body = stringResource(R.string.perm_a11y_body),
-                badge = stringResource(R.string.badge_recommended),
-                granted = snapshot.accessibility,
-                action = stringResource(if (snapshot.accessibility) R.string.manage else R.string.open_settings),
-                onAction = {
-                    if (snapshot.accessibility) context.openAccessibilitySettings()
-                    else showDisclosure = true
-                },
-            )
-            PermissionCard(
                 title = stringResource(R.string.perm_overlay),
                 body = stringResource(R.string.perm_overlay_body),
                 badge = stringResource(R.string.badge_recommended),
@@ -194,14 +173,6 @@ fun PermissionStatusScreen(
                 },
             )
             PermissionCard(
-                title = stringResource(R.string.perm_listener),
-                body = stringResource(R.string.perm_listener_body),
-                badge = stringResource(R.string.badge_optional),
-                granted = snapshot.notificationListener,
-                action = stringResource(if (snapshot.notificationListener) R.string.manage else R.string.open_settings),
-                onAction = { context.openNotificationListenerSettings() },
-            )
-            PermissionCard(
                 title = stringResource(R.string.perm_battery),
                 body = stringResource(R.string.perm_battery_body),
                 badge = stringResource(R.string.badge_optional),
@@ -209,6 +180,28 @@ fun PermissionStatusScreen(
                 action = stringResource(if (snapshot.batteryIgnored) R.string.manage else R.string.open_settings),
                 onAction = { context.openBatterySettings() },
             )
+            if (onContinue == null) {
+                PermissionCard(
+                    title = stringResource(R.string.perm_a11y),
+                    body = stringResource(R.string.perm_a11y_body),
+                    badge = stringResource(R.string.badge_optional),
+                    granted = snapshot.accessibility,
+                    action = stringResource(if (snapshot.accessibility) R.string.manage else R.string.open_settings),
+                    onAction = {
+                        if (snapshot.accessibility) context.openAccessibilitySettings()
+                        else showA11yDisclosure = true
+                    },
+                )
+            }
+            if (showA11yDisclosure) {
+                AccessibilityDisclosure(
+                    onDismiss = { showA11yDisclosure = false },
+                    onConfirm = {
+                        showA11yDisclosure = false
+                        context.openAccessibilitySettings()
+                    },
+                )
+            }
             Spacer(Modifier.size(8.dp))
         }
     }

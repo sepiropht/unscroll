@@ -56,7 +56,6 @@ import app.unscroll.ui.guard.PinPad
 import app.unscroll.ui.guard.rememberEditGuard
 import app.unscroll.ui.guard.weekdayCaption
 import app.unscroll.ui.permissions.rememberJitPermissionGate
-import app.unscroll.ui.permissions.requireAccessibility
 import app.unscroll.ui.permissions.requireNotifications
 import app.unscroll.ui.permissions.requireOverlay
 import kotlinx.coroutines.delay
@@ -131,10 +130,8 @@ fun LimitsScreen(
                 editing = null
                 guard.run {
                     jit.requireOverlay {
-                        jit.requireAccessibility {
-                            jit.requireNotifications {
-                                vm.saveDaily(editingPkg, millis, mask)
-                            }
+                        jit.requireNotifications {
+                            vm.saveDaily(editingPkg, millis, mask)
                         }
                     }
                 }
@@ -289,10 +286,10 @@ private fun LimitsBody(
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(stringResource(R.string.limits_lead), style = MaterialTheme.typography.bodyLarge)
-        if (!ui.accessibility) {
+        if (!ui.overlay) {
             LinkCard(
-                title = stringResource(R.string.limits_a11y_missing),
-                body = stringResource(R.string.limits_a11y_open),
+                title = stringResource(R.string.limits_overlay_missing),
+                body = stringResource(R.string.limits_overlay_open),
                 onClick = onOpenPermissions,
             )
         }

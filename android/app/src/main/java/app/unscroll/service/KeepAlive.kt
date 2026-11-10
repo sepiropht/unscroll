@@ -10,6 +10,8 @@ internal object KeepAlive {
     suspend fun restore(context: Context) {
         val app = context.applicationContext
         FocusRoutineScheduler.reschedule(app)
+        GuardWatchdog.schedule(app)
+        GuardService.ensure(app)
         FocusSessionKeeper.align(app)
         ReminderScheduler.schedule(app)
         WorkScheduler.schedule(app)

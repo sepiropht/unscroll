@@ -20,7 +20,7 @@ import app.unscroll.prefs.AppPrefs
 import app.unscroll.prefs.EditLock
 import app.unscroll.sync.SyncSettings
 import app.unscroll.service.FocusRoutineScheduler
-import app.unscroll.service.FocusService
+import app.unscroll.service.FocusNotifications
 import app.unscroll.service.ReminderScheduler
 import app.unscroll.widget.HomeWidgets
 import java.io.ByteArrayOutputStream
@@ -102,7 +102,7 @@ class SettingsArchive(context: Context) {
     }
 
     suspend fun wipe() {
-        withContext(Dispatchers.Main.immediate) { FocusService.haltIfRunning() }
+        withContext(Dispatchers.Main.immediate) { FocusNotifications.haltIfRunning(app) }
         withContext(Dispatchers.IO) {
             db.clearAllTables()
             UsageRepository(app).seedCategories()

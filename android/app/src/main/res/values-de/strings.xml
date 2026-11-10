@@ -18,9 +18,9 @@
     <string name="setup_access">Zugriffe einrichten</string>
     <string name="step_indicator">Schritt %1$d von %2$d</string>
     <string name="perm_usage">Zugriff auf Nutzungsdaten</string>
-    <string name="perm_usage_body">Unerlässlich. Liest die Systemereignisse: App im Vordergrund, Bildschirm an oder aus, Entsperrung. Das ist die Quelle der Statistik.</string>
-    <string name="perm_a11y">Bedienungshilfedienst</string>
-    <string name="perm_a11y_body">Empfohlen. Wendet eine verlässliche Sperre an, wenn Sie eine Grenze setzen, und liest die Adressleiste der Browser für die Zeit auf Websites. Geteilter Bildschirm und schwebendes Fenster werden genauso erfasst.</string>
+    <string name="perm_usage_body">Um die Zeit in jeder App zu messen und zu erkennen, welche App im Vordergrund ist, damit ein Limit den Pause-Bildschirm anzeigen kann.</string>
+    <string name="perm_a11y">Website-Zeiterfassung</string>
+    <string name="perm_a11y_body">Optional. Liest nur die Adressleiste bekannter Browser, um die Zeit pro Website zu messen. Standardmäßig aus. Wird angefragt, wenn Sie die Website-Zeiterfassung einschalten.</string>
     <string name="perm_overlay">Über anderen Apps anzeigen</string>
     <string name="perm_overlay_body">Nötig, um den Pausenbildschirm über der begrenzten App zu zeigen, auch bei geteiltem Bildschirm.</string>
     <string name="perm_notif">Benachrichtigungen</string>
@@ -37,10 +37,14 @@
     <string name="allow">Zulassen</string>
     <string name="cancel">Abbrechen</string>
     <string name="manage">Verwalten</string>
-    <string name="accessibility_disclosure_title">Bevor Sie die Bedienungshilfe aktivieren</string>
-    <string name="accessibility_disclosure_body">Unscroll bittet Sie, einen Bedienungshilfedienst zu aktivieren.\n\nEr erkennt die App im Vordergrund, damit Ihre Grenzen gelten, und liest die Adressleiste gängiger Browser, um die Zeit je Website zu schätzen.\n\nGeteilter Bildschirm und schwebendes Fenster umgehen keine Grenze. Bleibt die App neben einer anderen sichtbar, deckt der Pausenbildschirm alles ab. Ein schwebendes Fenster wird mit einem Tippen wieder im Vollbild geöffnet, damit die Grenze gilt.\n\nEr liest weder Ihre Nachrichten noch Ihre Passwörter noch das, was Sie tippen. Es wird nichts vom Gerät gesendet.\n\nSie können ihn jederzeit in den Android-Einstellungen ausschalten.</string>
+    <string name="accessibility_disclosure_title">Bevor Sie die Website-Zeiterfassung einschalten</string>
+    <string name="accessibility_disclosure_body">Unscroll bittet Sie, einen Bedienungshilfen-Dienst einzuschalten, um die Zeit auf Websites zu erfassen.
+
+Er liest nur die Adressleiste bekannter Browser (Chrome, Firefox, Brave, Edge, Samsung Internet, Opera und Varianten). Seiteninhalt, Nachrichten, Passwörter und Ihre Eingaben werden nicht gelesen. Der Bildschirm wird nicht gesteuert, und andere Apps werden nicht erkannt.
+
+Es wird nichts vom Gerät gesendet. Sie können den Dienst jederzeit in den Android-Einstellungen ausschalten.</string>
     <string name="accessibility_consent">Ich habe diese Erklärung gelesen und willige ein, den Dienst zu aktivieren.</string>
-    <string name="accessibility_service_description">Unscroll nutzt diesen Dienst, um zu wissen, welche App auf dem Bildschirm ist, damit die von Ihnen gewählten Grenzen gelten, und um die Adressleiste gängiger Browser zu lesen und die Zeit je Website zu schätzen. Der geteilte Bildschirm bleibt abgedeckt. Ein schwebendes Fenster kann mit einem Tippen wieder im Vollbild geöffnet werden, damit die Grenze gilt. Der Dienst liest weder Ihre Nachrichten noch Ihre Eingaben noch Ihre Passwörter. Es wird nichts vom Gerät gesendet.</string>
+    <string name="accessibility_service_description">Unscroll verwendet diesen Dienst nur, um die Adressleiste bekannter Browser zu lesen und die Zeit pro Website zu schätzen. Andere Apps werden nicht erkannt. Nachrichten, Eingaben und Passwörter werden nicht gelesen, und der Bildschirm wird nicht gesteuert. Es wird nichts vom Gerät gesendet.</string>
     <string name="today">Heute</string>
     <string name="yesterday">Gestern</string>
     <string name="period_day">Tag</string>
@@ -242,6 +246,8 @@
     <string name="nav_focus">Fokus</string>
     <string name="limits_title">Grenzen</string>
     <string name="limits_lead">Jede App kann eine Obergrenze für den Tag haben. Der Bedienungshilfedienst schließt den Bildschirm, sobald diese Grenze erreicht ist, und zeigt ihn wieder, wenn die App nach vorn zurückkehrt.</string>
+    <string name="limits_overlay_missing">Das Blockieren braucht die Berechtigung „Über anderen Apps einblenden“.</string>
+    <string name="limits_overlay_open">Einblendung erlauben</string>
     <string name="limits_a11y_missing">Die Sperre im Vordergrund wartet auf den Bedienungshilfedienst.</string>
     <string name="limits_a11y_open">Zugriffe ansehen</string>
     <string name="limits_notif_missing">Die Hinweise bei 5 Minuten und bei 1 Minute brauchen die Benachrichtigungsberechtigung.</string>
@@ -363,7 +369,7 @@
     <string name="websites_empty">Noch keine Websites. Öffnen Sie eine Seite in einem dieser Browser oder fügen Sie eine Domain hinzu, um sie vor dem Besuch zu begrenzen.</string>
     <string name="websites_add">Domain hinzufügen</string>
     <string name="websites_invalid">Dieser Text ist kein Domainname.</string>
-    <string name="websites_a11y">Ohne den Bedienungshilfedienst wird die Adressleiste nicht gelesen und eine Websitesperre nicht gesetzt.</string>
+    <string name="websites_a11y">Ohne den Bedienungshilfen-Dienst wird die Adressleiste nicht gelesen und ein Website-Limit nicht angewendet. Der Dienst dient nur der Website-Zeiterfassung.</string>
     <string name="websites_week">7 Tage: %1$s</string>
     <string name="websites_covered">Abgedeckt von %1$s</string>
     <string name="websites_subdomains">Diese Summe enthält die Subdomains.</string>

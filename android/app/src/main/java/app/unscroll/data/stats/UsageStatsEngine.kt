@@ -107,8 +107,8 @@ class UsageStatsEngine(context: Context) {
 
     @Suppress("DEPRECATION")
     private fun mapKind(type: Int): FoldKind = when (type) {
-        UsageEvents.Event.MOVE_TO_FOREGROUND -> FoldKind.FOREGROUND
-        UsageEvents.Event.MOVE_TO_BACKGROUND -> FoldKind.BACKGROUND
+        UsageEvents.Event.MOVE_TO_FOREGROUND, UsageEvents.Event.ACTIVITY_RESUMED -> FoldKind.FOREGROUND
+        UsageEvents.Event.MOVE_TO_BACKGROUND, UsageEvents.Event.ACTIVITY_PAUSED -> FoldKind.BACKGROUND
         UsageEvents.Event.SCREEN_INTERACTIVE -> FoldKind.SCREEN_ON
         UsageEvents.Event.SCREEN_NON_INTERACTIVE -> FoldKind.SCREEN_OFF
         UsageEvents.Event.KEYGUARD_HIDDEN -> FoldKind.UNLOCK

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
-    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowContentChanged|typeWindowsChanged"
+    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowContentChanged"
     android:accessibilityFeedbackType="feedbackGeneric"
     android:accessibilityFlags="flagReportViewIds|flagRetrieveInteractiveWindows"
-    android:canPerformGestures="true"
+    android:canPerformGestures="false"
     android:canRetrieveWindowContent="true"
     android:description="@string/accessibility_service_description"
-    android:notificationTimeout="0"
+    android:notificationTimeout="100"
+    android:packageNames="com.android.chrome,com.chrome.beta,com.chrome.dev,com.chrome.canary,com.brave.browser,com.brave.browser_beta,com.microsoft.emmx,com.microsoft.emmx.beta,com.sec.android.app.sbrowser,com.opera.browser,com.opera.browser.beta,org.mozilla.firefox,org.mozilla.firefox_beta,org.mozilla.fenix,org.mozilla.focus"
     android:settingsActivity="app.unscroll.MainActivity" />

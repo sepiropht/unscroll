@@ -1,5 +1,6 @@
 package app.unscroll.service
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.graphics.Point
@@ -33,50 +34,28 @@ import app.unscroll.ui.block.BlockUi
 import app.unscroll.ui.theme.UnscrollTheme
 
 /**
- * Affiche l’écran de pause par-dessus l’application limitée.
- * Superposition si l’autorisation est là, sinon activité plein écran.
+ * Affiche l'écran de pause par-dessus l'application limitée.
+ * Superposition si l'autorisation est là, sinon activité plein écran.
  */
-class BlockPresenter(private val service: ScreenTimeAccessibilityService) {
-    private val windowManager = service.getSystemService(WindowManager::class.java)
+class BlockPresenter(context: Context) {
+    private val app = context.applicationContext
+    private val windowManager = app.getSystemService(WindowManager::class.java)
     private val handler = Handler(Looper.getMainLooper())
     private var overlay: View? = null
     private var owner: OverlayOwner? = null
     private val state = mutableStateOf<BlockUi?>(null)
-    private var leaveSplit = false
     var visible: Boolean = false
         private set
 
-    private val reveal = Runnable {
-        if (!visible || state.value == null) return@Runnable
-        revealNow()
-    }
-
-    /**
-     * @param pipPackage application encore en fenêtre flottante, à rouvrir en plein écran avant de couvrir.
-     * @param otherPane un autre volet reste visible (écran partagé) : sans superposition, on quitte le partage.
-     */
-    fun show(decision: BlockDecision, pipPackage: String?, otherPane: Boolean) {
+    fun show(decision: BlockDecision) {
         val ui = decision.toUi() ?: return
         state.value = ui
-        leaveSplit = otherPane || pipPackage != null
-        handler.removeCallbacks(reveal)
-        val expanding = pipPackage != null && PictureInPictureGuard.expand(service, pipPackage)
-        if (expanding) {
-            leaveSplit = false
-            removeOverlay()
-            BlockActivity.finishIfShown()
-            visible = true
-            handler.postDelayed(reveal, EXPAND_DELAY_MS)
-            return
-        }
         revealNow()
     }
 
     fun hide() {
         visible = false
-        leaveSplit = false
         state.value = null
-        handler.removeCallbacks(reveal)
         removeOverlay()
         BlockActivity.finishIfShown()
     }
@@ -87,23 +66,21 @@ class BlockPresenter(private val service: ScreenTimeAccessibilityService) {
 
     private fun revealNow() {
         val ui = state.value ?: return
-        if (Settings.canDrawOverlays(service)) {
+        if (Settings.canDrawOverlays(app)) {
             if (overlay == null) {
                 val added = runCatching { addOverlay() }.isSuccess
-                if (!added) {
-                    launchActivity(ui, leaveSplit)
-                }
+                if (!added) launchActivity(ui)
             }
             BlockActivity.finishIfShown()
         } else {
             removeOverlay()
-            launchActivity(ui, leaveSplit)
+            launchActivity(ui)
         }
         visible = true
     }
 
     private fun addOverlay() {
-        val themed = android.view.ContextThemeWrapper(service, R.style.Theme_Unscroll)
+        val themed = android.view.ContextThemeWrapper(app, R.style.Theme_Unscroll)
         val life = OverlayOwner()
         life.start()
         val view = ComposeView(themed).apply {
@@ -115,7 +92,7 @@ class BlockPresenter(private val service: ScreenTimeAccessibilityService) {
             isFocusableInTouchMode = true
             setOnKeyListener { _, keyCode, event ->
                 if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-                    ScreenTimeAccessibilityService.requestClose()
+                    GuardRuntime.requestClose()
                     true
                 } else {
                     false
@@ -127,9 +104,9 @@ class BlockPresenter(private val service: ScreenTimeAccessibilityService) {
                     if (ui != null) {
                         BlockScreen(
                             state = ui,
-                            onClose = { ScreenTimeAccessibilityService.requestClose() },
+                            onClose = { GuardRuntime.requestClose() },
                             onExtra = {
-                                ScreenTimeAccessibilityService.requestExtra(ui.targetKey, ui.reason.name)
+                                GuardRuntime.requestExtra(ui.targetKey, ui.reason.name)
                             },
                         )
                     }
@@ -156,7 +133,6 @@ class BlockPresenter(private val service: ScreenTimeAccessibilityService) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             }
-            // Couvre les deux volets et les barres : un écran partagé ne doit pas laisser un côté libre.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 fitInsetsTypes = 0
                 setFitInsetsSides(0)
@@ -176,12 +152,8 @@ class BlockPresenter(private val service: ScreenTimeAccessibilityService) {
         owner = null
     }
 
-    private fun launchActivity(ui: BlockUi, exitSplit: Boolean) {
-        if (exitSplit) {
-            // Sans superposition, l’activité ne prend qu’un volet. L’accueil referme le partage.
-            service.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_HOME)
-        }
-        val intent = Intent(service, BlockActivity::class.java).apply {
+    private fun launchActivity(ui: BlockUi) {
+        val intent = Intent(app, BlockActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra(BlockActivity.EXTRA_REASON, ui.reason.name)
             putExtra(BlockActivity.EXTRA_KIND, ui.subjectKind.name)
@@ -191,7 +163,7 @@ class BlockPresenter(private val service: ScreenTimeAccessibilityService) {
             putExtra(BlockActivity.EXTRA_TARGET, ui.targetKey)
             putExtra(BlockActivity.EXTRA_SCHEDULE, ui.scheduleName)
         }
-        service.startActivity(intent)
+        app.startActivity(intent)
     }
 
     @Suppress("DEPRECATION")
@@ -203,10 +175,6 @@ class BlockPresenter(private val service: ScreenTimeAccessibilityService) {
         val size = Point()
         windowManager.defaultDisplay.getRealSize(size)
         return size.x to size.y
-    }
-
-    private companion object {
-        const val EXPAND_DELAY_MS = 350L
     }
 }
 
@@ -224,21 +192,23 @@ private fun BlockDecision.toUi(): BlockUi? {
 }
 
 private class OverlayOwner : LifecycleOwner, ViewModelStoreOwner, SavedStateRegistryOwner {
-    private val registry = LifecycleRegistry(this)
+    private val lifecycleRegistry = LifecycleRegistry(this)
     private val store = ViewModelStore()
-    private val saved = SavedStateRegistryController.create(this)
+    private val savedStateController = SavedStateRegistryController.create(this)
 
-    override val lifecycle: Lifecycle get() = registry
+    override val lifecycle: Lifecycle get() = lifecycleRegistry
     override val viewModelStore: ViewModelStore get() = store
-    override val savedStateRegistry: SavedStateRegistry get() = saved.savedStateRegistry
+    override val savedStateRegistry: SavedStateRegistry get() = savedStateController.savedStateRegistry
 
     fun start() {
-        saved.performRestore(null)
-        registry.currentState = Lifecycle.State.RESUMED
+        savedStateController.performRestore(null)
+        lifecycleRegistry.currentState = Lifecycle.State.CREATED
+        lifecycleRegistry.currentState = Lifecycle.State.STARTED
+        lifecycleRegistry.currentState = Lifecycle.State.RESUMED
     }
 
     fun destroy() {
-        registry.currentState = Lifecycle.State.DESTROYED
+        lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
         store.clear()
     }
 }

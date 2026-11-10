@@ -102,9 +102,6 @@ fun RemindersScreen(
             if (!permissions.notifications) {
                 Notice(stringResource(R.string.reminders_notif_missing), onOpenPermissions)
             }
-            if (!permissions.accessibility) {
-                Notice(stringResource(R.string.reminders_a11y_missing), onOpenPermissions)
-            }
             if (!permissions.usage) {
                 Notice(stringResource(R.string.reminders_usage_missing), onOpenPermissions)
             }

@@ -5,6 +5,8 @@ import app.unscroll.data.achieve.AchievementStore
 import app.unscroll.data.repo.UsageRepository
 import app.unscroll.data.work.WorkScheduler
 import app.unscroll.service.FocusRoutineScheduler
+import app.unscroll.service.GuardService
+import app.unscroll.service.GuardWatchdog
 import app.unscroll.service.GuardNotifications
 import app.unscroll.service.ReminderScheduler
 import app.unscroll.widget.HomeWidgets
@@ -19,6 +21,8 @@ class UnscrollApp : Application() {
         GuardNotifications.ensure(this)
         WorkScheduler.schedule(this)
         FocusRoutineScheduler.onChanged(this)
+        GuardWatchdog.schedule(this)
+        GuardService.ensure(this)
         ReminderScheduler.schedule(this)
         runCatching { AchievementStore.get(this).settleDue(System.currentTimeMillis()) }
         HomeWidgets.refreshAsync(this)

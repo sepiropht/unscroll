@@ -19,9 +19,9 @@
     <string name="step_indicator">Step %1$d of %2$d</string>
 
     <string name="perm_usage">Usage access</string>
-    <string name="perm_usage_body">To measure time spent in each app.</string>
-    <string name="perm_a11y">Accessibility service</string>
-    <string name="perm_a11y_body">To block an app and read websites.</string>
+    <string name="perm_usage_body">To measure time spent in each app, and to know which app is in front so a limit can show the pause screen.</string>
+    <string name="perm_a11y">Website tracking</string>
+    <string name="perm_a11y_body">Optional. Reads only the address bar of known browsers, to measure time per site. Off by default. Asked when you turn on website tracking.</string>
     <string name="perm_overlay">Display over other apps</string>
     <string name="perm_overlay_body">To show the pause screen over an app.</string>
     <string name="perm_notif">Notifications</string>
@@ -39,10 +39,14 @@
     <string name="cancel">Cancel</string>
     <string name="manage">Manage</string>
 
-    <string name="accessibility_disclosure_title">Before enabling accessibility</string>
-    <string name="accessibility_disclosure_body">Unscroll asks you to enable an accessibility service.\n\nIt recognizes the foreground app so your limits can be applied, and reads the address bar of common browsers to estimate time per site.\n\nSplit screen and a floating window do not bypass a limit. If the app stays visible beside another, the pause screen covers both. A floating window is opened full screen, with a tap, so the limit applies.\n\nIt does not read your messages, passwords, or what you type. Nothing is sent off the device.\n\nYou can turn it off at any time in Android settings.</string>
+    <string name="accessibility_disclosure_title">Before enabling website tracking</string>
+    <string name="accessibility_disclosure_body">Unscroll asks you to enable an accessibility service to track time on websites.
+
+It reads only the address bar of known browsers (Chrome, Firefox, Brave, Edge, Samsung Internet, Opera, and their variants). It does not read page content, messages, passwords, or what you type. It does not control the screen or detect which other apps you use.
+
+Nothing is sent off the device. You can turn it off at any time in Android settings.</string>
     <string name="accessibility_consent">I have read this and agree to enable the service.</string>
-    <string name="accessibility_service_description">Unscroll uses this service to know which app is on screen, so it can apply the limits you chose, and to read the address bar of common browsers to estimate time per site. Split screen stays covered. A floating window can be opened full screen, with a tap, so the limit applies. The service does not read your messages, your typing, or your passwords. Nothing is sent off the device.</string>
+    <string name="accessibility_service_description">Unscroll uses this service only to read the address bar of known browsers, so it can estimate time per website. It does not recognize other apps, does not read messages, typing, or passwords, and does not control the screen. Nothing is sent off the device.</string>
 
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
@@ -136,7 +140,7 @@
     <string name="block_active_permanent">Block noted, with no end date</string>
     <string name="block_clear">Lift the block</string>
     <string name="block_save">Note the block</string>
-    <string name="enforcement_hint">The accessibility service applies this limit as soon as the app comes back to the front. A notification warns at 5 minutes, then at 1 minute.</string>
+    <string name="enforcement_hint">The limit applies when the app is at the front, using usage access and the pause overlay. A notification warns at 5 minutes, then at 1 minute.</string>
     <string name="category_picker_title">Category</string>
 
     <string name="categories_title">Categories</string>
@@ -257,6 +261,8 @@
     <string name="nav_focus">Focus</string>
     <string name="limits_title">Limits</string>
     <string name="limits_lead">Daily cap per app.</string>
+    <string name="limits_overlay_missing">Blocking needs display over other apps.</string>
+    <string name="limits_overlay_open">Grant overlay access</string>
     <string name="limits_a11y_missing">Blocking needs accessibility.</string>
     <string name="limits_a11y_open">Review access</string>
     <string name="limits_notif_missing">Alerts need notifications.</string>
@@ -379,7 +385,7 @@
     <string name="websites_empty">No sites yet. Open a page in one of these browsers, or add a domain to limit it before the visit.</string>
     <string name="websites_add">Add a domain</string>
     <string name="websites_invalid">That text is not a domain name.</string>
-    <string name="websites_a11y">Without the accessibility service, the address bar is not read and a site block is not applied.</string>
+    <string name="websites_a11y">Without the accessibility service, the address bar is not read and a site limit is not applied. The service is used only for website tracking.</string>
     <string name="websites_week">7 days: %1$s</string>
     <string name="websites_covered">Covered by %1$s</string>
     <string name="websites_subdomains">This total includes subdomains.</string>
@@ -392,7 +398,7 @@
     <string name="settings_reminders">Reminders</string>
     <string name="settings_reminders_sub"></string>
     <string name="reminders_title">Reminders</string>
-    <string name="reminders_lead">Notifications stay on the device. Continuous use follows the same foreground app. The eye break follows the screen while it is on. Both need the accessibility service.</string>
+    <string name="reminders_lead">Notifications stay on the device. Continuous use and the eye break follow the foreground app reported by usage access, so they may lag by a short moment when the app is in the background.</string>
     <string name="reminders_usage_title">Usage reminder</string>
     <string name="reminders_usage_body">A notification when the same app stays open, without returning home.</string>
     <string name="reminders_eye_title">Eye break</string>
@@ -401,7 +407,7 @@
     <string name="reminders_summary_body">At the chosen time: today’s total, unlocks, and the app used the longest.</string>
     <string name="reminders_summary_time">Summary time</string>
     <string name="reminders_notif_missing">These reminders need notification permission.</string>
-    <string name="reminders_a11y_missing">Continuous use and the eye break need the accessibility service. The summary is still sent without it, at the chosen time.</string>
+    <string name="reminders_a11y_missing">Continuous use and the eye break follow usage access. The daily summary is still sent at the chosen time.</string>
     <string name="reminders_usage_missing">The summary needs usage access in order to quote a duration.</string>
     <string name="channel_usage">Usage reminders</string>
     <string name="channel_usage_body">Tells you when an app has stayed open for a while.</string>
@@ -543,7 +549,9 @@
     <string name="settings_about_sub"></string>
     <string name="about_title">About</string>
     <string name="about_privacy_title">Privacy</string>
-    <string name="about_privacy_body">Measurements, limits, and settings stay on this device. There is no account, no advertising, and no audience measurement. The Privacy screen says what stays here, and what can leave if you asked for it.\n\nThe accessibility service, when it is on, recognizes the foreground app and reads the address bar of known browsers. It does not read messages, typing, or passwords.</string>
+    <string name="about_privacy_body">Measurements, limits, and settings stay on this device. There is no account, no advertising, and no audience measurement. The Privacy screen says what stays here, and what can leave if you asked for it.
+
+Usage access counts time and tells the app which application is in front, so a limit can show the pause screen. Website tracking, when you turn it on, uses an accessibility service that reads only the address bar of known browsers. It does not read messages, typing, or passwords. Nothing is sent off the device unless you turn on optional sync.</string>
     <string name="about_license_title">Licenses</string>
     <string name="about_license_body">Unscroll is distributed under the AGPL-3.0 license. AndroidX, Kotlin, Room, WorkManager, and Glance are under the Apache 2.0 license.</string>
     <string name="settings_sync">Sync</string>
@@ -556,7 +564,7 @@
     <string name="privacy_local_title">On this device</string>
     <string name="privacy_local_body">Measurements, limits, sites, and settings stay in the phone’s storage. There is no account. Nothing is sent to an audience, advertising, or crash service. Sync has its own screen. It stays off until you turn it on, and then sends only ciphertext to the server you choose.</string>
     <string name="privacy_access_title">What the app sees</string>
-    <string name="privacy_access_body">Usage access counts screen time. The accessibility service, when it is on, recognizes the foreground app and reads the address bar of known browsers. It does not read messages, typing, or passwords. The notification counter, when it is on, keeps only the count: not the title, not the text.</string>
+    <string name="privacy_access_body">Usage access counts screen time and is used to know which app is in front, so a limit can show the pause overlay. Website tracking is optional: the accessibility service, when you turn it on, reads only the address bar of known browsers. The app does not read messages, passwords, or what you type. Display over other apps is used only to show that pause screen.</string>
     <string name="privacy_sync_title">Sync</string>
     <string name="privacy_sync_body">The default server is https://sync.unscroll.elimbi.com. You can change it. Turning sync on with an empty token creates an anonymous account: the server stores only the hash of the token. A 32-byte key stays on the phone and encrypts end to end (AES-GCM). The server receives only ciphertext. A passphrase remains available for a vault that already uses one.</string>
     <string name="privacy_sync_enable">Turn sync on</string>

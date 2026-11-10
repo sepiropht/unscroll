@@ -20,9 +20,9 @@
 
 ## Déclarations d'autorisations
 
-11. Accès aux données d'usage, service d'accessibilité, QUERY_ALL_PACKAGES, affichage par-dessus les autres apps, accès aux notifications, et service de premier plan « special use » : textes à coller dans `play-forms.md`.
-12. Pour l'accessibilité : **ne pas** déclarer Unscroll comme outil d'accessibilité pour les personnes handicapées. Tourner une courte vidéo de démo (divulgation dans l'app, consentement, puis une limite qui s'applique).
-13. Le fichier AAB à envoyer est `app-release.aab` (versionCode **1**, versionName **1.0.0**, targetSdk **36**). Active **Play App Signing** : la clé d'upload est déjà celle qui a signé ce fichier. Ne perds pas le keystore (copie hors ligne à faire).
+11. Accès aux données d'usage, affichage par-dessus les autres apps, et service d'accessibilité **uniquement pour le suivi du temps par site** : textes à coller dans `play-forms.md`. Ne pas déclarer QUERY_ALL_PACKAGES, l'accès aux notifications, ni un service de premier plan « special use » : ils ne sont plus demandés.
+12. Pour l'accessibilité : déclarer uniquement le suivi du temps sur les sites (lecture de la barre d'adresse des navigateurs connus). **Ne pas** déclarer Unscroll comme outil d'accessibilité pour les personnes handicapées. Tourner une courte vidéo de démo : activation du suivi des sites, divulgation dans l'app, consentement, puis le temps d'un site (ou une limite de site) qui s'applique.
+13. Le fichier AAB à envoyer est `app-release.aab` (versionCode **2**, versionName **1.0.1**, targetSdk **36**). Active **Play App Signing** : la clé d'upload est déjà celle qui a signé ce fichier. Ne perds pas le keystore (copie hors ligne à faire).
 
 ## Test et envoi
 

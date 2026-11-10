@@ -317,7 +317,7 @@ class GuardRepository(context: Context) {
 
     fun prefs(): AppPrefs = prefs
 
-    /** Filet lorsque l’accessibilité ne signale plus le premier plan. */
+    /** Dernière application au premier plan d'après UsageStats. */
     fun currentForeground(now: Long, lookbackMs: Long): String? = engine.currentForeground(now, lookbackMs)
 
     fun defaultSleepPackages(): Set<String> {

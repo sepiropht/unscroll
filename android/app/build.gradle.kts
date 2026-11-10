@@ -28,8 +28,8 @@ android {
         applicationId = "app.unscroll"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.0.1"
     }
 
     if (releaseSigningReady) {
@@ -96,7 +96,7 @@ dependencies {
     implementation("androidx.glance:glance-appwidget:1.1.1")
 
     // QR pairing is decoded on the device with ZXing. No Google account, no web service.
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("com.google.zxing:core:3.4.1")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.json:json:20240303")

@@ -9,6 +9,8 @@ import app.unscroll.data.guard.GuardRepository
 import app.unscroll.data.guard.Weekdays
 import app.unscroll.data.stats.LimitKeys
 import app.unscroll.permissions.PermissionChecks
+import app.unscroll.service.GuardService
+import app.unscroll.service.GuardWatchdog
 import app.unscroll.ui.detail.BlockSpan
 import java.time.LocalDate
 import java.time.ZoneId
@@ -150,6 +152,8 @@ class WebsiteDetailViewModel(
             withContext(Dispatchers.IO) {
                 repo.saveDailyLimit(LimitKeys.web(host), dailyLimitMillis, weekdaysMask)
             }
+            GuardService.ensure(getApplication())
+            GuardWatchdog.schedule(getApplication())
             refresh()
         }
     }

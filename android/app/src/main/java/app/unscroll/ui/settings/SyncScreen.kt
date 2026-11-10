@@ -231,8 +231,6 @@ private fun SyncCard(ui: PrivacyUi, vm: PrivacyViewModel) {
                 onToggle = vm::togglePairing,
                 onPasteChange = vm::setPaste,
                 onPaste = vm::applyPasted,
-                onScanned = vm::applyPairing,
-                onDenied = { vm.report(R.string.privacy_sync_scan_denied, true) },
                 onCopied = { vm.report(R.string.privacy_sync_pair_copied, false) },
                 onCopyFailed = { vm.report(R.string.privacy_sync_pair_copy_fail, true) },
             )

@@ -24,14 +24,12 @@ import app.unscroll.R
 import app.unscroll.permissions.PermissionChecks
 import app.unscroll.permissions.openAccessibilitySettings
 import app.unscroll.permissions.openBatterySettings
-import app.unscroll.permissions.openNotificationListenerSettings
 import app.unscroll.permissions.openOverlaySettings
 
 enum class JitPermission {
     Overlay,
     Accessibility,
     Notifications,
-    NotificationListener,
     Battery,
 }
 
@@ -80,71 +78,64 @@ fun rememberJitPermissionGate(): JitPermissionGate {
                 },
             )
         } else {
-            val title = when (kind) {
-                JitPermission.Overlay -> stringResource(R.string.perm_overlay)
-                JitPermission.Accessibility -> stringResource(R.string.perm_a11y)
-                JitPermission.Notifications -> stringResource(R.string.perm_notif)
-                JitPermission.NotificationListener -> stringResource(R.string.perm_listener)
-                JitPermission.Battery -> stringResource(R.string.perm_battery)
-            }
-            val body = when (kind) {
-                JitPermission.Overlay -> stringResource(R.string.perm_overlay_body)
-                JitPermission.Accessibility -> stringResource(R.string.perm_a11y_body)
-                JitPermission.Notifications -> stringResource(R.string.perm_notif_body)
-                JitPermission.NotificationListener -> stringResource(R.string.perm_listener_body)
-                JitPermission.Battery -> stringResource(R.string.perm_battery_body)
-            }
-            AlertDialog(
-                onDismissRequest = { pending = null },
-                title = { Text(title) },
-                text = { Text(body) },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            val cont = dialogPending.second
-                            when (kind) {
-                                JitPermission.Overlay -> {
+        val title = when (kind) {
+            JitPermission.Overlay -> stringResource(R.string.perm_overlay)
+            JitPermission.Accessibility -> stringResource(R.string.perm_a11y)
+            JitPermission.Notifications -> stringResource(R.string.perm_notif)
+            JitPermission.Battery -> stringResource(R.string.perm_battery)
+        }
+        val body = when (kind) {
+            JitPermission.Overlay -> stringResource(R.string.perm_overlay_body)
+            JitPermission.Accessibility -> stringResource(R.string.perm_a11y_body)
+            JitPermission.Notifications -> stringResource(R.string.perm_notif_body)
+            JitPermission.Battery -> stringResource(R.string.perm_battery_body)
+        }
+        AlertDialog(
+            onDismissRequest = { pending = null },
+            title = { Text(title) },
+            text = { Text(body) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val cont = dialogPending.second
+                        when (kind) {
+                            JitPermission.Overlay -> {
+                                pending = null
+                                resumeCont.value = cont
+                                context.openOverlaySettings()
+                            }
+                            JitPermission.Accessibility -> {
+                                pending = null
+                                resumeCont.value = cont
+                                context.openAccessibilitySettings()
+                            }
+                            JitPermission.Notifications -> {
+                                if (Build.VERSION.SDK_INT >= 33) {
+                                    notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                } else {
                                     pending = null
-                                    resumeCont.value = cont
-                                    context.openOverlaySettings()
-                                }
-                                JitPermission.Accessibility -> {
-                                    pending = null
-                                    resumeCont.value = cont
-                                    context.openAccessibilitySettings()
-                                }
-                                JitPermission.Notifications -> {
-                                    if (Build.VERSION.SDK_INT >= 33) {
-                                        notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                                    } else {
-                                        pending = null
-                                        Handler(Looper.getMainLooper()).post { cont() }
-                                    }
-                                }
-                                JitPermission.NotificationListener -> {
-                                    pending = null
-                                    resumeCont.value = cont
-                                    context.openNotificationListenerSettings()
-                                }
-                                JitPermission.Battery -> {
-                                    pending = null
-                                    resumeCont.value = cont
-                                    context.openBatterySettings()
+                                    Handler(Looper.getMainLooper()).post { cont() }
                                 }
                             }
-                        },
-                    ) { Text(stringResource(R.string.perm_jit_allow)) }
-                },
-                dismissButton = {
-                    TextButton(
-                        onClick = {
-                            val cont = dialogPending.second
-                            pending = null
-                            Handler(Looper.getMainLooper()).post { cont() }
-                        },
-                    ) { Text(stringResource(R.string.perm_jit_not_now)) }
-                },
-            )
+                            JitPermission.Battery -> {
+                                pending = null
+                                resumeCont.value = cont
+                                context.openBatterySettings()
+                            }
+                        }
+                    },
+                ) { Text(stringResource(R.string.perm_jit_allow)) }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        val cont = dialogPending.second
+                        pending = null
+                        Handler(Looper.getMainLooper()).post { cont() }
+                    },
+                ) { Text(stringResource(R.string.perm_jit_not_now)) }
+            },
+        )
         }
     }
     return remember(context) {
@@ -152,9 +143,6 @@ fun rememberJitPermissionGate(): JitPermissionGate {
             if (alreadyOk(context)) {
                 continueAnyway()
             } else {
-                // Defer the dialog one looper turn so the tap that triggered
-                // the chain (e.g. Enregistrer, same coordinates as Autoriser)
-                // cannot also confirm the newly shown prompt.
                 Handler(Looper.getMainLooper()).post {
                     pendingState.value = kind to continueAnyway
                 }
@@ -170,8 +158,11 @@ fun interface JitPermissionGate {
 fun JitPermissionGate.requireOverlay(continueAnyway: () -> Unit) =
     run(JitPermission.Overlay, { PermissionChecks.canOverlay(it) }, continueAnyway)
 
-fun JitPermissionGate.requireAccessibility(continueAnyway: () -> Unit) =
-    run(JitPermission.Accessibility, { PermissionChecks.isAccessibilityEnabled(it) }, continueAnyway)
-
 fun JitPermissionGate.requireNotifications(continueAnyway: () -> Unit) =
     run(JitPermission.Notifications, { PermissionChecks.hasNotifications(it) }, continueAnyway)
+
+fun JitPermissionGate.requireBattery(continueAnyway: () -> Unit) =
+    run(JitPermission.Battery, { PermissionChecks.ignoresBatteryOptimizations(it) }, continueAnyway)
+
+fun JitPermissionGate.requireAccessibility(continueAnyway: () -> Unit) =
+    run(JitPermission.Accessibility, { PermissionChecks.isAccessibilityEnabled(it) }, continueAnyway)

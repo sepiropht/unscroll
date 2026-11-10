@@ -8,6 +8,8 @@ import app.unscroll.data.guard.GuardRepository
 import app.unscroll.data.guard.Weekdays
 import app.unscroll.data.stats.LimitKeys
 import app.unscroll.permissions.PermissionChecks
+import app.unscroll.service.GuardService
+import app.unscroll.service.GuardWatchdog
 import app.unscroll.prefs.AppPrefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +32,7 @@ data class LimitsUiState(
     val pauseUntil: Long = 0L,
     val extraEnabled: Boolean = true,
     val pinOn: Boolean = false,
-    val accessibility: Boolean = false,
+    val overlay: Boolean = false,
     val notifications: Boolean = true,
 )
 
@@ -58,6 +60,9 @@ class LimitsViewModel(app: Application) : AndroidViewModel(app) {
             }
             refresh()
         }
+        GuardService.ensure(getApplication())
+        GuardWatchdog.schedule(getApplication())
+
     }
 
     fun setExtra(enabled: Boolean) {
@@ -105,7 +110,7 @@ class LimitsViewModel(app: Application) : AndroidViewModel(app) {
             pauseUntil = prefs.pauseUntilMillis,
             extraEnabled = prefs.extraMinutesEnabled,
             pinOn = prefs.hasPin(),
-            accessibility = PermissionChecks.isAccessibilityEnabled(app),
+            overlay = PermissionChecks.canOverlay(app),
             notifications = PermissionChecks.hasNotifications(app),
         )
     }

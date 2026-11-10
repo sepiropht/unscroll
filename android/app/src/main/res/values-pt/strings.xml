@@ -18,9 +18,9 @@
     <string name="setup_access">Preparar os acessos</string>
     <string name="step_indicator">Passo %1$d de %2$d</string>
     <string name="perm_usage">Acesso aos dados de utilização</string>
-    <string name="perm_usage_body">Indispensável. Serve para ler os eventos do sistema: aplicação em primeiro plano, ecrã ligado ou desligado, desbloqueio. É a fonte das estatísticas.</string>
-    <string name="perm_a11y">Serviço de acessibilidade</string>
-    <string name="perm_a11y_body">Recomendado. Permite aplicar um bloqueio fiável quando define um limite, e ler a barra de endereço dos navegadores para o tempo nos sítios. O ecrã dividido e a janela flutuante ficam cobertos da mesma forma.</string>
+    <string name="perm_usage_body">Para medir o tempo em cada aplicação e saber qual está em primeiro plano, para que um limite possa mostrar o ecrã de pausa.</string>
+    <string name="perm_a11y">Acompanhamento de sites</string>
+    <string name="perm_a11y_body">Opcional. Lê apenas a barra de endereço dos navegadores conhecidos, para medir o tempo por site. Desligado por predefinição. É pedido quando ativa o acompanhamento de sites.</string>
     <string name="perm_overlay">Mostrar por cima de outras aplicações</string>
     <string name="perm_overlay_body">Necessário para mostrar o ecrã de pausa por cima da aplicação limitada, mesmo quando o ecrã está dividido.</string>
     <string name="perm_notif">Notificações</string>
@@ -37,10 +37,14 @@
     <string name="allow">Permitir</string>
     <string name="cancel">Cancelar</string>
     <string name="manage">Gerir</string>
-    <string name="accessibility_disclosure_title">Antes de ativar a acessibilidade</string>
-    <string name="accessibility_disclosure_body">Unscroll pede-lhe que ative um serviço de acessibilidade.\n\nServe para reconhecer a aplicação em primeiro plano e aplicar os seus limites, e para ler a barra de endereço dos navegadores habituais a fim de estimar o tempo por sítio.\n\nO ecrã dividido e a janela flutuante não contornam um limite. Se a aplicação continuar visível ao lado de outra, o ecrã de pausa cobre tudo. Uma janela flutuante é reaberta em ecrã inteiro, com um toque, para o limite se aplicar.\n\nNão lê as suas mensagens, as suas palavras-passe nem o que escreve. Nada é enviado para fora do aparelho.\n\nPode desativá-lo quando quiser nas definições do Android.</string>
+    <string name="accessibility_disclosure_title">Antes de ativar o acompanhamento de sites</string>
+    <string name="accessibility_disclosure_body">O Unscroll pede-lhe que ative um serviço de acessibilidade para acompanhar o tempo em sites.
+
+Lê apenas a barra de endereço de navegadores conhecidos (Chrome, Firefox, Brave, Edge, Samsung Internet, Opera e as suas variantes). Não lê o conteúdo das páginas, mensagens, palavras-passe nem o que escreve. Não controla o ecrã nem deteta outras aplicações.
+
+Nada é enviado para fora do dispositivo. Pode desativá-lo a qualquer momento nas definições do Android.</string>
     <string name="accessibility_consent">Li esta explicação e aceito ativar o serviço.</string>
-    <string name="accessibility_service_description">Unscroll usa este serviço para saber que aplicação está no ecrã, a fim de aplicar os limites que escolheu, e para ler a barra de endereço dos navegadores habituais a fim de estimar o tempo por sítio. O ecrã dividido continua coberto. Uma janela flutuante pode ser reaberta em ecrã inteiro, com um toque, para aplicar o limite. O serviço não lê as suas mensagens, o que escreve nem as suas palavras-passe. Nada é enviado para fora do aparelho.</string>
+    <string name="accessibility_service_description">O Unscroll usa este serviço apenas para ler a barra de endereço de navegadores conhecidos e estimar o tempo por site. Não reconhece outras aplicações, não lê mensagens, a escrita ou palavras-passe, e não controla o ecrã. Nada é enviado para fora do dispositivo.</string>
     <string name="today">Hoje</string>
     <string name="yesterday">Ontem</string>
     <string name="period_day">Dia</string>
@@ -246,6 +250,8 @@
     <string name="nav_focus">Concentração</string>
     <string name="limits_title">Limites</string>
     <string name="limits_lead">Cada aplicação pode ter um teto para o dia. O serviço de acessibilidade fecha o ecrã assim que esse teto é atingido, e volta a mostrá-lo se a aplicação regressa ao primeiro plano.</string>
+    <string name="limits_overlay_missing">O bloqueio precisa de aparecer sobre outras aplicações.</string>
+    <string name="limits_overlay_open">Permitir sobreposição</string>
     <string name="limits_a11y_missing">O bloqueio em primeiro plano espera o serviço de acessibilidade.</string>
     <string name="limits_a11y_open">Ver os acessos</string>
     <string name="limits_notif_missing">Os alertas aos 5 minutos e ao minuto pedem a permissão de notificações.</string>
@@ -367,7 +373,7 @@
     <string name="websites_empty">Ainda não há sítios. Abra uma página num destes navegadores, ou adicione um domínio para o limitar antes da visita.</string>
     <string name="websites_add">Adicionar um domínio</string>
     <string name="websites_invalid">Este texto não é um nome de domínio.</string>
-    <string name="websites_a11y">Sem o serviço de acessibilidade, a barra de endereço não é lida e o bloqueio de um sítio não se aplica.</string>
+    <string name="websites_a11y">Sem o serviço de acessibilidade, a barra de endereço não é lida e um limite de site não é aplicado. O serviço serve apenas para o acompanhamento de sites.</string>
     <string name="websites_week">7 dias: %1$s</string>
     <string name="websites_covered">Coberto por %1$s</string>
     <string name="websites_subdomains">Este total inclui os subdomínios.</string>

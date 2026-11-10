@@ -27,10 +27,6 @@ fun Context.openOverlaySettings() {
     }
 }
 
-fun Context.openNotificationListenerSettings() {
-    startSettings(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
-}
-
 fun Context.openBatterySettings() {
     val direct = Intent(
         Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,

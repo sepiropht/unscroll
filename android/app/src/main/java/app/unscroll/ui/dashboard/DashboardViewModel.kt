@@ -180,7 +180,7 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
             null
         }
         val storedNotifications = if (access) repo.notificationsBetween(start, end, excluded) else 0
-        val showNotifications = PermissionChecks.hasNotificationListener(app) || storedNotifications > 0
+        val showNotifications = false
         return DashboardUiState(
             loading = false,
             usageAccess = access,

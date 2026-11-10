@@ -49,7 +49,7 @@ object FocusSessions {
                 AchievementStore.get(app).armManual(prefs.focusStartedMillis, prefs.focusUntilMillis)
             }
         }
-        FocusService.start(app)
+        FocusNotifications.start(app)
         FocusTileService.requestListening(app)
         return true
     }
@@ -87,15 +87,12 @@ object FocusSessionKeeper {
     /** Démarre la notification si un créneau est ouvert, et rafraîchit la tuile. */
     fun ensure(context: Context) {
         val app = context.applicationContext
-        if (FocusService.running) {
-            FocusTileService.requestListening(app)
-            return
-        }
         scope.launch {
             if (isActive(app)) {
-                FocusService.start(app)
+                FocusNotifications.start(app)
+            } else {
+                FocusTileService.requestListening(app)
             }
-            FocusTileService.requestListening(app)
         }
     }
 
@@ -107,11 +104,9 @@ object FocusSessionKeeper {
     suspend fun align(context: Context) {
         val app = context.applicationContext
         if (isActive(app)) {
-            FocusService.start(app)
+            FocusNotifications.start(app)
         } else {
-            runCatching {
-                app.startService(Intent(app, FocusService::class.java).setAction(FocusService.ACTION_ALIGN))
-            }
+            FocusNotifications.refresh(app)
         }
         FocusTileService.requestListening(app)
     }

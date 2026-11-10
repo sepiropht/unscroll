@@ -19,9 +19,9 @@
     <string name="step_indicator">Étape %1$d sur %2$d</string>
 
     <string name="perm_usage">Accès aux données d’utilisation</string>
-    <string name="perm_usage_body">Pour mesurer le temps passé dans chaque app.</string>
-    <string name="perm_a11y">Service d’accessibilité</string>
-    <string name="perm_a11y_body">Pour bloquer une app et lire les sites.</string>
+    <string name="perm_usage_body">Pour mesurer le temps passé dans chaque application, et savoir laquelle est au premier plan afin d’afficher l’écran de pause.</string>
+    <string name="perm_a11y">Suivi des sites</string>
+    <string name="perm_a11y_body">Facultatif. Lit uniquement la barre d’adresse des navigateurs connus, pour mesurer le temps par site. Désactivé par défaut. Demandé lorsque vous activez le suivi des sites.</string>
     <string name="perm_overlay">Affichage par-dessus les autres applications</string>
     <string name="perm_overlay_body">Pour afficher l’écran de pause par-dessus une app.</string>
     <string name="perm_notif">Notifications</string>
@@ -39,10 +39,14 @@
     <string name="cancel">Annuler</string>
     <string name="manage">Gérer</string>
 
-    <string name="accessibility_disclosure_title">Avant d’activer l’accessibilité</string>
-    <string name="accessibility_disclosure_body">Unscroll vous demande d’activer un service d’accessibilité.\n\nIl sert à reconnaître l’application au premier plan pour appliquer vos limites, et à lire la barre d’adresse des navigateurs courants afin d’estimer le temps par site.\n\nL’écran partagé et la fenêtre flottante ne contournent pas une limite. Si l’application reste visible à côté d’une autre, l’écran de pause couvre l’ensemble. Une fenêtre flottante est rouverte en plein écran, par un appui, pour que la limite s’applique.\n\nIl ne lit pas vos messages, vos mots de passe ni ce que vous tapez. Aucune donnée n’est envoyée hors de l’appareil.\n\nVous pouvez le désactiver à tout moment dans les réglages Android.</string>
+    <string name="accessibility_disclosure_title">Avant d’activer le suivi des sites</string>
+    <string name="accessibility_disclosure_body">Unscroll vous demande d’activer un service d’accessibilité pour suivre le temps passé sur les sites.
+
+Il lit uniquement la barre d’adresse des navigateurs connus (Chrome, Firefox, Brave, Edge, Samsung Internet, Opera, et leurs variantes). Il ne lit pas le contenu des pages, vos messages, vos mots de passe, ni ce que vous tapez. Il ne commande pas l’écran et ne détecte pas les autres applications.
+
+Rien n’est envoyé hors de l’appareil. Vous pouvez le désactiver à tout moment dans les réglages Android.</string>
     <string name="accessibility_consent">J’ai lu cette explication et j’accepte d’activer le service.</string>
-    <string name="accessibility_service_description">Unscroll utilise ce service pour savoir quelle application est à l’écran, afin d’appliquer les limites que vous avez choisies, et pour lire la barre d’adresse des navigateurs courants afin d’estimer le temps passé par site. L’écran partagé reste couvert. Une fenêtre flottante peut être rouverte en plein écran, par un appui, pour appliquer la limite. Le service ne lit pas vos messages, vos saisies ni vos mots de passe. Aucune donnée n’est envoyée hors de l’appareil.</string>
+    <string name="accessibility_service_description">Unscroll utilise ce service uniquement pour lire la barre d’adresse des navigateurs connus, afin d’estimer le temps passé sur chaque site. Il ne reconnaît pas les autres applications, ne lit pas vos messages, votre saisie ou vos mots de passe, et ne commande pas l’écran. Rien n’est envoyé hors de l’appareil.</string>
 
     <string name="today">Aujourd’hui</string>
     <string name="yesterday">Hier</string>
@@ -261,6 +265,8 @@
     <string name="nav_focus">Concentration</string>
     <string name="limits_title">Limites</string>
     <string name="limits_lead">Plafond par application et par jour.</string>
+    <string name="limits_overlay_missing">Le blocage a besoin de l’affichage par-dessus d’autres applications.</string>
+    <string name="limits_overlay_open">Autoriser l’affichage par-dessus</string>
     <string name="limits_a11y_missing">Le blocage demande l’accessibilité.</string>
     <string name="limits_a11y_open">Voir les accès</string>
     <string name="limits_notif_missing">Les alertes demandent les notifications.</string>
@@ -383,7 +389,7 @@
     <string name="websites_empty">Aucun site pour l’instant. Ouvrez une page dans un de ces navigateurs, ou ajoutez un domaine pour le limiter avant la visite.</string>
     <string name="websites_add">Ajouter un domaine</string>
     <string name="websites_invalid">Ce texte n’est pas un nom de domaine.</string>
-    <string name="websites_a11y">Sans le service d’accessibilité, la barre d’adresse n’est pas lue et le blocage d’un site ne se pose pas.</string>
+    <string name="websites_a11y">Sans le service d’accessibilité, la barre d’adresse n’est pas lue et une limite de site n’est pas appliquée. Le service sert uniquement au suivi des sites.</string>
     <string name="websites_week">7 jours : %1$s</string>
     <string name="websites_covered">Couvert par %1$s</string>
     <string name="websites_subdomains">Ce total comprend les sous-domaines.</string>
