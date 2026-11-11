@@ -110,7 +110,7 @@ object GuardWatchdog {
         )
     }
 
-    const val ACTION = "app.unscroll.action.GUARD_WATCHDOG"
+    const val ACTION = "com.elimbi.unscroll.action.GUARD_WATCHDOG"
 }
 
 class GuardWatchdogReceiver : BroadcastReceiver() {

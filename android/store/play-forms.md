@@ -1,6 +1,6 @@
-# Play Console forms — Unscroll (`app.unscroll`)
+# Play Console forms — Unscroll (`com.elimbi.unscroll`)
 
-Fill these in the console. The wording below is a draft you can paste. It matches the app as of version 1.0.1 (versionCode 2).
+Fill these in the console. The wording below is a draft you can paste. It matches the app as of version 1.0.2 (versionCode 3).
 
 ## Category and audience
 

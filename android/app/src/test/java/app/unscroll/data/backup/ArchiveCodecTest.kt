@@ -91,7 +91,7 @@ class ArchiveCodecTest {
         val json = ArchiveCodec.encode(snapshot)
         val root = JSONObject(json)
         assertEquals(1, root.getInt("format"))
-        assertEquals("app.unscroll", root.getString("app"))
+        assertEquals("com.elimbi.unscroll", root.getString("app"))
         val keys = root.keys().asSequence().toSet()
         assertEquals(
             setOf(

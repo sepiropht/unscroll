@@ -13,7 +13,7 @@ class UsageEventFolderTest {
     private val next = day.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
     private val folder = UsageEventFolder(
         zone,
-        setOf("android", "com.android.systemui", "app.unscroll"),
+        setOf("android", "com.android.systemui", "com.elimbi.unscroll"),
     )
 
     @Test

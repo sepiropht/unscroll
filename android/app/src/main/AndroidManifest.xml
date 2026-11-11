@@ -68,7 +68,7 @@
             android:resizeableActivity="false"
             android:showWhenLocked="true"
             android:supportsPictureInPicture="false"
-            android:taskAffinity="app.unscroll.block"
+            android:taskAffinity="com.elimbi.unscroll.block"
             android:theme="@style/Theme.Unscroll"
             android:turnScreenOn="true" />
 
@@ -95,7 +95,7 @@
             android:name=".service.GuardWatchdogReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="app.unscroll.action.GUARD_WATCHDOG" />
+                <action android:name="com.elimbi.unscroll.action.GUARD_WATCHDOG" />
             </intent-filter>
         </receiver>
 
@@ -103,11 +103,11 @@
             android:name=".service.FocusActionReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="app.unscroll.FOCUS_STOP" />
-                <action android:name="app.unscroll.FOCUS_STOP_MANUAL" />
-                <action android:name="app.unscroll.FOCUS_SKIP_ROUTINE" />
-                <action android:name="app.unscroll.FOCUS_ALIGN" />
-                <action android:name="app.unscroll.FOCUS_ENDED" />
+                <action android:name="com.elimbi.unscroll.FOCUS_STOP" />
+                <action android:name="com.elimbi.unscroll.FOCUS_STOP_MANUAL" />
+                <action android:name="com.elimbi.unscroll.FOCUS_SKIP_ROUTINE" />
+                <action android:name="com.elimbi.unscroll.FOCUS_ALIGN" />
+                <action android:name="com.elimbi.unscroll.FOCUS_ENDED" />
             </intent-filter>
         </receiver>
 

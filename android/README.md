@@ -2,7 +2,7 @@
 
 Screen time per app, daily limits, focus sessions, reminders, and a home-screen widget. Data stays on the phone. Sync is optional and end-to-end encrypted.
 
-- `applicationId`: `app.unscroll`
+- `applicationId`: `com.elimbi.unscroll`
 - Min SDK 26, target SDK 36
 - English by default; French, Spanish, German, and Portuguese translations in `app/src/main/res/values-*`
 
@@ -32,7 +32,7 @@ Open **More → Sync**, turn it on, then **Pair a device** to show a QR code, or
 
 ## Release build
 
-`versionCode` is 2 and `versionName` is 1.0.1. The target SDK is 36, which meets the Google Play requirement for new apps as of 31 August 2026.
+`versionCode` is 3 and `versionName` is 1.0.2. The target SDK is 36, which meets the Google Play requirement for new apps as of 31 August 2026.
 
 A release build is minified with R8. Signing is optional, so a contributor can still run `./gradlew :app:assembleRelease` without a keystore; the bundle or APK is then left unsigned.
 

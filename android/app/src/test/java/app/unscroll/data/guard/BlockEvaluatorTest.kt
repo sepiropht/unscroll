@@ -552,7 +552,7 @@ class BlockEvaluatorTest {
 
     private companion object {
         const val PKG = "com.example.notes"
-        const val SELF = "app.unscroll"
+        const val SELF = "com.elimbi.unscroll"
         const val MIN = 60_000L
         const val FIVE = 5 * MIN
     }

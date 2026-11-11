@@ -113,7 +113,7 @@ object FocusSessionKeeper {
 }
 
 object FocusRoutineScheduler {
-    const val ACTION_FIRE = "app.unscroll.action.FOCUS_ROUTINE_FIRE"
+    const val ACTION_FIRE = "com.elimbi.unscroll.action.FOCUS_ROUTINE_FIRE"
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 

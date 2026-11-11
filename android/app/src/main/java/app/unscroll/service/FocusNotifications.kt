@@ -30,11 +30,11 @@ import kotlinx.coroutines.withContext
  * [GuardEngine] via UsageStats et la superposition.
  */
 object FocusNotifications {
-    const val ACTION_STOP = "app.unscroll.FOCUS_STOP"
-    const val ACTION_STOP_MANUAL = "app.unscroll.FOCUS_STOP_MANUAL"
-    const val ACTION_SKIP_ROUTINE = "app.unscroll.FOCUS_SKIP_ROUTINE"
-    const val ACTION_ALIGN = "app.unscroll.FOCUS_ALIGN"
-    const val ACTION_ENDED = "app.unscroll.FOCUS_ENDED"
+    const val ACTION_STOP = "com.elimbi.unscroll.FOCUS_STOP"
+    const val ACTION_STOP_MANUAL = "com.elimbi.unscroll.FOCUS_STOP_MANUAL"
+    const val ACTION_SKIP_ROUTINE = "com.elimbi.unscroll.FOCUS_SKIP_ROUTINE"
+    const val ACTION_ALIGN = "com.elimbi.unscroll.FOCUS_ALIGN"
+    const val ACTION_ENDED = "com.elimbi.unscroll.FOCUS_ENDED"
     const val EXTRA_ROUTINE_ID = "routine_id"
 
     fun start(context: Context) {

@@ -315,10 +315,10 @@ internal object ArchiveCodec {
     }
 
     private const val FORMAT = 1
-    private const val APP_ID = "app.unscroll"
+    private const val APP_ID = "com.elimbi.unscroll"
 
-    /** Backups written before the rename to Unscroll still import. */
-    private val ACCEPTED_APP_IDS = setOf(APP_ID, "cm.elimbi.screentime")
+    /** Backups written under previous application IDs still import. */
+    private val ACCEPTED_APP_IDS = setOf(APP_ID, "app.unscroll", "cm.elimbi.screentime")
     private const val MAX_ROWS = 4_000
     private const val MINUTES = 24 * 60
     private val FORMULA = setOf('=', '+', '-', '@')

@@ -146,7 +146,7 @@ object DailySummary {
 }
 
 object ReminderScheduler {
-    const val ACTION_SUMMARY = "app.unscroll.action.DAILY_SUMMARY"
+    const val ACTION_SUMMARY = "com.elimbi.unscroll.action.DAILY_SUMMARY"
 
     fun schedule(context: Context) {
         val app = context.applicationContext
