@@ -99,6 +99,16 @@ The accessibility service is used only for website time tracking. It is optional
 
 **Demo video should show:** turning on website tracking, the in-app disclosure and consent checkbox, enabling the service, then time being recorded for a site in a supported browser (or a site limit being applied). Do not present the service as required for ordinary app blocking.
 
+**Paste-ready Accessibility API declaration** (core purpose, why the API is needed, what is read):
+
+Core purpose: Unscroll is a local-first screen-time app. The accessibility service is used only so the person can optionally measure time spent on websites and apply a site limit they chose.
+
+Why the Accessibility API is needed: Android does not provide a usage-stats API for individual websites. The only way to estimate time per site is to read the domain from the address bar of a supported browser. Ordinary app time and app blocking do not use this service; they use usage access and the display-over-other-apps overlay. The service is optional, off by default, and turned on only after a prominent in-app disclosure and explicit consent.
+
+What data is read: only the domain shown in the address bar of known browsers (Chrome, Firefox, Brave, Edge, Samsung Internet, Opera, and their variants). The service does not read page content, messages, passwords, or typed input, does not recognize other apps, and does not control the screen. That domain and the derived site time are stored locally on the device. They are never sent off the device, except if the person turns on optional end-to-end encrypted sync, which uploads only ciphertext the server cannot read.
+
+**Demo video file (not in git):** `/workspace/unscroll-play/accessibility-demo.mp4` and `~/services/apk-dl/unscroll-play/accessibility-demo.mp4`. About 82 seconds, English UI, example data. It shows opening Unscroll 1.0.2, the website tracking option, the prominent disclosure, accepting it, enabling the Unscroll service in Android Accessibility settings, visiting wikipedia.org in Chrome, and wikipedia.org appearing in Unscroll site time. Upload the MP4 to YouTube (unlisted is fine) and paste the link in the Play form.
+
 ### Query all packages (`QUERY_ALL_PACKAGES`)
 
 **Not declared.** The app does not request this permission. A `<queries>` element for `MAIN`/`LAUNCHER` is used so launchable apps can be listed with their labels and icons. Packages that appear in usage events but have no launcher may be shown under their package name. The app does not inventory other apps for advertising or for a store.

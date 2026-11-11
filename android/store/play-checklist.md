@@ -21,7 +21,7 @@
 ## Déclarations d'autorisations
 
 11. Accès aux données d'usage, affichage par-dessus les autres apps, et service d'accessibilité **uniquement pour le suivi du temps par site** : textes à coller dans `play-forms.md`. Ne pas déclarer QUERY_ALL_PACKAGES, l'accès aux notifications, ni un service de premier plan « special use » : ils ne sont plus demandés.
-12. Pour l'accessibilité : déclarer uniquement le suivi du temps sur les sites (lecture de la barre d'adresse des navigateurs connus). **Ne pas** déclarer Unscroll comme outil d'accessibilité pour les personnes handicapées. Tourner une courte vidéo de démo : activation du suivi des sites, divulgation dans l'app, consentement, puis le temps d'un site (ou une limite de site) qui s'applique.
+12. Pour l'accessibilité : déclarer uniquement le suivi du temps sur les sites (lecture de la barre d'adresse des navigateurs connus). **Ne pas** déclarer Unscroll comme outil d'accessibilité pour les personnes handicapées. La vidéo de démo est prête (hors git) dans `/workspace/unscroll-play/accessibility-demo.mp4` et `~/services/apk-dl/unscroll-play/accessibility-demo.mp4` : ouverture d'Unscroll, option de suivi des sites, divulgation, consentement, activation du service, visite de wikipedia.org dans Chrome, puis le domaine dans le temps par site. William l'envoie sur YouTube (non répertoriée) et colle le lien dans le formulaire.
 13. Le fichier AAB à envoyer est `app-release.aab` (versionCode **3**, versionName **1.0.2**, applicationId **com.elimbi.unscroll**, targetSdk **36**). Active **Play App Signing** : la clé d'upload est déjà celle qui a signé ce fichier. Ne perds pas le keystore (copie hors ligne à faire).
 
 ## Test et envoi
