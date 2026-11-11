@@ -1,6 +1,7 @@
 package app.unscroll
 
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -37,6 +38,7 @@ import app.unscroll.prefs.AppPrefs
 import app.unscroll.sync.SyncRules
 import app.unscroll.prefs.EditLock
 import app.unscroll.service.GuardNotifications
+import app.unscroll.ui.block.BlockActivity
 import app.unscroll.ui.achieve.AchievementsScreen
 import app.unscroll.ui.categories.CategoriesScreen
 import app.unscroll.ui.categories.CategoryDetailScreen
@@ -75,6 +77,7 @@ class MainActivity : ComponentActivity() {
         pendingRoute = intent?.getStringExtra(GuardNotifications.EXTRA_ROUTE)
         pendingStartFocus = intent?.getBooleanExtra(GuardNotifications.EXTRA_START_FOCUS, false) == true
         pendingPairing = pairingUri(intent)
+        maybeOpenDebugBlock(intent)
         val start = if (AppPrefs(this).onboardingDone) Routes.DASHBOARD else Routes.ONBOARDING
         setContent {
             UnscrollTheme {
@@ -109,6 +112,7 @@ class MainActivity : ComponentActivity() {
             pendingStartFocus = true
         }
         pairingUri(intent)?.let { pendingPairing = it }
+        maybeOpenDebugBlock(intent)
     }
 
     private fun consumePairing() {
@@ -116,6 +120,20 @@ class MainActivity : ComponentActivity() {
         val current = intent ?: return
         current.data = null
         if (current.action == Intent.ACTION_VIEW) current.action = Intent.ACTION_MAIN
+    }
+
+    private fun maybeOpenDebugBlock(source: Intent?) {
+        if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE == 0) return
+        if (source?.getBooleanExtra("debug_block", false) != true) return
+        startActivity(
+            Intent(this, BlockActivity::class.java).apply {
+                putExtra(BlockActivity.EXTRA_REASON, source.getStringExtra("debug_block_reason") ?: "DAILY")
+                putExtra(BlockActivity.EXTRA_KIND, source.getStringExtra("debug_block_kind") ?: "APP")
+                putExtra(BlockActivity.EXTRA_SUBJECT, source.getStringExtra("debug_block_subject") ?: "Chrome")
+                putExtra(BlockActivity.EXTRA_TARGET, source.getStringExtra("debug_block_target") ?: "app:com.android.chrome")
+                putExtra(BlockActivity.EXTRA_ALLOW, true)
+            },
+        )
     }
 
     private fun pairingUri(source: Intent?): String? {
@@ -184,15 +202,20 @@ private fun AppNav(
     }
     LaunchedEffect(pendingRoute) {
         val route = pendingRoute ?: return@LaunchedEffect
-        if (prefs.onboardingDone && route in setOf(
-                Routes.FOCUS,
-                Routes.LIMITS,
-                Routes.SCHEDULES,
-                Routes.SLEEP,
-                Routes.WEBSITES,
-                Routes.REMINDERS,
-            )
-        ) {
+        val allowed = mutableSetOf(
+            Routes.FOCUS,
+            Routes.LIMITS,
+            Routes.SCHEDULES,
+            Routes.SLEEP,
+            Routes.WEBSITES,
+            Routes.REMINDERS,
+        )
+        val debuggable = context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+        if (debuggable) {
+            allowed += setOf(Routes.SETTINGS, Routes.SYNC, Routes.HISTORY, Routes.REPORT)
+        }
+        val canOpen = route in allowed || (debuggable && route.startsWith("detail/"))
+        if (prefs.onboardingDone && canOpen) {
             nav.navigate(route) { launchSingleTop = true }
         }
         onRouteConsumed()

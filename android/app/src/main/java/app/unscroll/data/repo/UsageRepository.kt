@@ -1,6 +1,7 @@
 package app.unscroll.data.repo
 
 import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteException
 import androidx.room.withTransaction
@@ -23,6 +24,7 @@ import app.unscroll.data.stats.PkgSlice
 import app.unscroll.data.stats.UsageStatsEngine
 import app.unscroll.permissions.PermissionChecks
 import app.unscroll.prefs.AppPrefs
+import java.io.File
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -62,6 +64,7 @@ class UsageRepository(context: Context) {
             val liveDay = live[dayStart]
             val stored = storedTotals[dayStart]
             val slice = when {
+                preferStored() && stored != null -> stored.toSlice(date, storedUsage[dayStart].orEmpty())
                 hasAccess && !date.isBefore(recentFrom) && liveDay != null -> liveDay
                 stored != null -> stored.toSlice(date, storedUsage[dayStart].orEmpty())
                 liveDay != null -> liveDay
@@ -83,6 +86,7 @@ class UsageRepository(context: Context) {
 
     /** Photographie les jours encore couverts par le système, sans rétrécir l'historique. */
     suspend fun persistRecent(daysBack: Long = 9) {
+        if (preferStored()) return
         if (!PermissionChecks.hasUsageAccess(app)) return
         val zone = ZoneId.systemDefault()
         val today = LocalDate.now(zone)
@@ -344,6 +348,19 @@ class UsageRepository(context: Context) {
             sessions = emptyList(),
             eventCount = if (durationMillis > 0L || unlockCount > 0) 1 else 0,
         )
+    }
+
+    /**
+     * Debug-only: if files/unscroll-demo exists in the app sandbox, prefer Room data
+     * over live usage stats. Used to seed example screenshots. Never on in release.
+     */
+    private fun preferStored(): Boolean {
+        if (app.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE == 0) return false
+        val candidates = listOfNotNull(
+            File(app.filesDir, "unscroll-demo"),
+            app.getExternalFilesDir(null)?.let { File(it, "unscroll-demo") },
+        )
+        return candidates.any { it.exists() }
     }
 
     private companion object {
